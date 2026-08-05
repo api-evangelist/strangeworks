@@ -1,0 +1,89 @@
+generated: '2026-08-05'
+method: searched
+source: https://docs.strangeworks.com/strangeworks-python
+docs: https://docs.strangeworks.com/strangeworks-python
+note: >-
+  Strangeworks publishes no OpenAPI, so this profile was not derived by
+  derive-authentication.py. It is assembled from the documented SDK auth flow plus the
+  first-party strangeworks-core 0.5.4 client (strangeworks_core/platform/auth.py,
+  gql.py, defaults.py) and confirmed against live probes of api.strangeworks.com.
+summary:
+  types: [apiKey, http]
+  api_key_in: [body]
+  bearer_format: JWT
+  oauth2_flows: []
+  oidc: false
+  mtls: false
+base_url: https://api.strangeworks.com
+schemes:
+- name: WorkspaceAPIKey
+  type: apiKey
+  in: body
+  parameter: key
+  description: >-
+    A per-workspace API key issued from the Strangeworks Portal home page. A user who
+    belongs to multiple workspaces has a different key for each. Exchanged for a
+    short-lived JWT — it is not sent on API calls directly.
+  issued_at: https://portal.strangeworks.com/
+  exchange_endpoint: POST https://api.strangeworks.com/users/token
+  sdk_usage: |
+    import strangeworks as sw
+    sw.authenticate(api_key)
+  sources: [https://docs.strangeworks.com/strangeworks-python, 'pypi:strangeworks-core==0.5.4']
+- name: ProductAPIKey
+  type: apiKey
+  in: body
+  parameter: key
+  description: >-
+    A product API key, held by a compute product published on the platform, used to
+    call the products GraphQL API. Rotatable via the productRegenerateAPIKey mutation
+    on the platform API.
+  exchange_endpoint: POST https://api.strangeworks.com/product/token
+  sources: ['pypi:strangeworks-core==0.5.4']
+- name: BearerToken
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: >-
+    The JWT returned by the token exchange, sent as `Authorization: Bearer <token>` on
+    every GraphQL and REST-proxy call. The SDK caches it in an LRU cache with a TTL
+    hash and re-exchanges on expiry.
+  applies_to:
+  - https://api.strangeworks.com/sdk
+  - https://api.strangeworks.com/platform
+  - https://api.strangeworks.com/products
+  - https://api.strangeworks.com/products/{product_slug}/resource/{resource_slug}/{path}
+  sources: ['pypi:strangeworks-core==0.5.4']
+token_exchange:
+- endpoint: POST https://api.strangeworks.com/users/token
+  audience: SDK / platform user
+  request: '{"key": "<workspace api key>"}'
+  returns: JWT bearer token
+  observed_error:
+    probe: POST with empty body, 2026-08-05
+    http_status: 400
+    body: '{"description":"","message":"key cannot be empty"}'
+- endpoint: POST https://api.strangeworks.com/product/token
+  audience: platform product
+  request: '{"key": "<product api key>"}'
+  returns: JWT bearer token
+  observed_error:
+    probe: POST with empty body, 2026-08-05
+    http_status: 400
+    body: '{"description":"","message":"key cannot be empty"}'
+key_management:
+  rotate_user_key: 'platform GraphQL mutation: workspaceMemberRegenerateAPIKey'
+  delete_user_key: 'platform GraphQL mutation: workspaceMemberDeleteAPIKey'
+  rotate_product_key: 'platform GraphQL mutation: productRegenerateAPIKey'
+  scope: >-
+    Authorization is workspace-scoped and role-based (WorkspaceRole enum in the
+    platform schema), not OAuth-scope based. There is no OAuth 2.0 or OIDC surface.
+x-observation:
+  anonymous_introspection: true
+  detail: >-
+    GraphQL introspection (__schema) answers HTTP 200 anonymously on /sdk, /platform and
+    /products with no Authorization header — the full type system, including every
+    mutation on user accounts, billing and workspaces, is readable without credentials.
+    Data-bearing fields still require a bearer token; only the schema is public. This is
+    an observation about the deployed surface, not a documented Strangeworks feature.
+  probed: '2026-08-05'

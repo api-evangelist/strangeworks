@@ -1,0 +1,34 @@
+generated: '2026-08-05'
+method: searched
+source: https://docs.strangeworks.com/welcome/latest-updates
+url: https://docs.strangeworks.com/welcome/latest-updates
+scheme: dated-release-notes
+current_version: null
+note: >-
+  Strangeworks publishes a "Latest Updates / Release Notes" page in its documentation, but
+  as of 2026-08-05 it carries a single entry. The page is real and dated; it is simply
+  thin. SDK releases are tracked separately and only on PyPI — there is no repository
+  CHANGELOG and no release-notes feed for the API itself.
+entries:
+- date: '2026-01'
+  title: January 2026 Updates
+  breaking: false
+  additions:
+  - Gurobi 13.0.1 is now available.
+  source: https://docs.strangeworks.com/welcome/latest-updates
+package_versions:
+  note: Latest published versions observed on PyPI 2026-08-05; PyPI is the only release trail for the SDK.
+  observed:
+  - {package: strangeworks, version: 0.7.6}
+  - {package: strangeworks-core, version: 0.5.4}
+  - {package: strangeworks-optimization, version: 0.2.44}
+  - {package: strangeworks-optimization-models, version: 0.1.68}
+  - {package: strangeworks-braket, version: 1.0.24}
+  - {package: strangeworks-qiskit, version: 0.4.7}
+  - {package: strangeworks-qaoa, version: 0.1.13}
+  - {package: strangeworks-vqe, version: 0.1.8}
+  - {package: strangeworks-azure, version: 0.1.7}
+gaps:
+- No RSS/Atom or JSON feed for release notes.
+- No per-release dates or version numbers for the GraphQL API itself.
+- No repository CHANGELOG.md (the public GitHub org exposes only an `examples` repo).

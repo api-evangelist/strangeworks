@@ -1,0 +1,95 @@
+generated: '2026-08-05'
+method: searched
+source: https://pypi.org/ (per-package JSON API, probed 2026-08-05)
+note: >-
+  Strangeworks ships a Python-only SDK family. npm was probed for "strangeworks" and
+  "@strangeworks/sdk" (both 404); no Maven Central, NuGet, pkg.go.dev, RubyGems,
+  Packagist or crates.io package was found. All packages below are published by
+  Strangeworks (contact hello@strangeworks.com, Apache-2.0) and are first-party.
+packages:
+- language: python
+  registry: pypi
+  name: strangeworks
+  version: 0.7.6
+  url: https://pypi.org/project/strangeworks/
+  install: pip install strangeworks
+  license: Apache-2.0
+  description: Strangeworks Python SDK — the primary client for the platform.
+  official: true
+- language: python
+  registry: pypi
+  name: strangeworks-core
+  version: 0.5.4
+  url: https://pypi.org/project/strangeworks-core/
+  install: pip install strangeworks-core
+  description: >-
+    Core infrastructure for interacting with the Strangeworks platform — config,
+    auth (users/token, product/token), GraphQL and REST clients, and the Job,
+    Resource, Backend, Workspace, File, Product types.
+  official: true
+- language: python
+  registry: pypi
+  name: strangeworks-optimization
+  version: 0.2.44
+  url: https://pypi.org/project/strangeworks-optimization/
+  install: pip install strangeworks-optimization
+  description: SDK extension for the Strangeworks optimization service and solvers.
+  official: true
+- language: python
+  registry: pypi
+  name: strangeworks-optimization-models
+  version: 0.1.68
+  url: https://pypi.org/project/strangeworks-optimization-models/
+  install: pip install strangeworks-optimization-models
+  description: Pydantic models for the Strangeworks optimization SDK and applications.
+  official: true
+- language: python
+  registry: pypi
+  name: strangeworks-qiskit
+  version: 0.4.7
+  url: https://pypi.org/project/strangeworks-qiskit/
+  install: pip install strangeworks-qiskit
+  description: Qiskit SDK extension — run Qiskit circuits on Strangeworks backends.
+  official: true
+- language: python
+  registry: pypi
+  name: strangeworks-braket
+  version: 1.0.24
+  url: https://pypi.org/project/strangeworks-braket/
+  install: pip install strangeworks-braket
+  description: Amazon Braket SDK extension.
+  official: true
+- language: python
+  registry: pypi
+  name: strangeworks-azure
+  version: 0.1.7
+  url: https://pypi.org/project/strangeworks-azure/
+  install: pip install strangeworks-azure
+  description: Azure Quantum SDK extension.
+  official: true
+- language: python
+  registry: pypi
+  name: strangeworks-qaoa
+  version: 0.1.13
+  url: https://pypi.org/project/strangeworks-qaoa/
+  install: pip install strangeworks-qaoa
+  description: SDK extension for running the QAOA service on Strangeworks.
+  official: true
+- language: python
+  registry: pypi
+  name: strangeworks-vqe
+  version: 0.1.8
+  url: https://pypi.org/project/strangeworks-vqe/
+  install: pip install strangeworks-vqe
+  description: SDK extension for running the Variational Quantum Eigensolver service.
+  official: true
+extras:
+  note: >-
+    The `strangeworks` package declares optional extras that pull provider extensions.
+  declared:
+  - {extra: amazon-braket, requires: strangeworks-braket-extension}
+  - {extra: qiskit-ionq, requires: strangeworks-qiskit-ionq-extension}
+registries_probed:
+- {registry: pypi, result: 9 first-party packages found}
+- {registry: npm, result: 404 for strangeworks and @strangeworks/sdk}
+- {registry: 'maven/nuget/go/rubygems/packagist/crates', result: no first-party package found}

@@ -1,0 +1,55 @@
+generated: '2026-08-05'
+method: probed
+source: live GET of /.well-known/* on every Strangeworks host in apis.yml
+note: >-
+  No /.well-known/ discovery document is published on any Strangeworks host. Every
+  path below returned 404 on 2026-08-05. This file is a negative record kept as
+  evidence; no WellKnown, SecurityTxt, APICatalog or AgentCard pointer is wired in
+  apis.yml, because nothing was found. Strangeworks DOES publish an AI content
+  preference signal, but it is carried in robots.txt (Content-Signal, contentsignals.org)
+  rather than under /.well-known/ — see the ContentSignal pointer in apis.yml.
+hosts:
+- host: https://strangeworks.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://api.strangeworks.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://docs.strangeworks.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://portal.strangeworks.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+content_signal:
+  source: https://strangeworks.com/robots.txt
+  status: 200
+  header: 'Content-Signal: search=yes, ai-input=yes, ai-train=no'
+  spec: https://contentsignals.org/
+  note: >-
+    robots.txt explicitly Allows GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot,
+    Claude-Web, Claude-SearchBot, Claude-User, Google-Extended, PerplexityBot,
+    Perplexity-User, CCBot, Applebot-Extended, Bytespider, Meta-ExternalAgent and
+    cohere-ai, while declaring ai-train=no via Content-Signal.

@@ -1,0 +1,109 @@
+generated: '2026-08-05'
+method: derived
+source: graphql/strangeworks-platform.graphql (live introspection) + https://docs.strangeworks.com/strangeworks-python
+note: >-
+  Cross-cutting request/response semantics for the Strangeworks platform. Derived from
+  the live GraphQL schemas and the first-party strangeworks-core 0.5.4 client; Strangeworks
+  does not publish a conventions/design-guide page, so nothing here is a quoted provider
+  claim except the SDK auth snippet.
+transport:
+  primary: GraphQL over HTTP POST
+  endpoints:
+  - {name: sdk, url: 'https://api.strangeworks.com/sdk', audience: SDK users}
+  - {name: platform, url: 'https://api.strangeworks.com/platform', audience: portal / full platform}
+  - {name: products, url: 'https://api.strangeworks.com/products', audience: published compute products}
+  secondary:
+    name: resource REST proxy
+    pattern: https://api.strangeworks.com/products/{product_slug}/resource/{resource_slug}/{path}
+    methods: [GET, POST, PUT]
+    description: >-
+      Once a product is activated into a Resource, the SDK forwards arbitrary REST calls
+      to the product behind this proxy path. The path segment after the resource slug is
+      product-defined, so there is no fixed operation set to document.
+    source: 'pypi:strangeworks-core==0.5.4 strangeworks_core/types/resource.py proxy_url()'
+authentication:
+  style: bearer-jwt-from-api-key
+  header: 'Authorization: Bearer <jwt>'
+  exchange: POST https://api.strangeworks.com/users/token
+  detail: authentication/strangeworks-authentication.yml
+identifiers:
+  style: slug
+  detail: >-
+    Every first-class object carries both an opaque `id: ID!` and a human-usable
+    `slug: String!` described in-schema as "a workspace-unique (alphanumeric + `_`)
+    identifier". Slugs — not ids — are what the SDK, the REST proxy path and nearly
+    every mutation input take (workspaceSlug, resourceSlug, jobSlug, productSlug).
+  external_ids: >-
+    Job.externalIdentifier holds "a remote identifier for this Job, typically from an
+    external system", and Job.remoteStatus mirrors an external system's status string.
+pagination:
+  style: relay-cursor
+  input_type: PaginationInput
+  params: [first, after, last, before]
+  response_fields: [edges, edges.node, edges.cursor, pageInfo]
+  page_info_fields: [hasNextPage, hasPreviousPage, startCursor, endCursor]
+  connections: [JobConnection, ResourceConnection, WorkspaceFileConnection, BillingTransactionConnection]
+  note: >-
+    Cursor-based Relay Connections throughout. JobConnection additionally returns
+    aggregate jobStatusCounts and a jobGraph alongside edges.
+sorting:
+  input_types: [JobOrder, ResourceOrder, BillingTransactionOrder]
+  direction_enum: OrderDirection
+  fields:
+    JobOrderField: see graphql/strangeworks-platform.graphql
+    ResourceOrderField: see graphql/strangeworks-platform.graphql
+    BillingTransactionOrderField: [RESOURCE_NAME, STATUS, DATE_CREATED, AMOUNT]
+filtering:
+  detail: >-
+    Workspace.jobs accepts workspaceMemberSlug, parentJobSlug, isChild, resourceSlug,
+    productSlug, tags, status, dateRange (DateRangeInput), groupBy (JobGroupBy) and a
+    free-text `q`. Workspace.resources accepts productSlug, productType and orderBy.
+  free_text_search: 'q argument on Workspace.jobs and Workspace.suggestJobTags'
+timestamps:
+  scalar: Time
+  fields: [dateCreated, dateUpdated, dateJobCreated, dateJobStarted, dateJobCompleted]
+  soft_delete: 'isDeleted: Boolean! on Job, File, EventSubscription and related types'
+free_form_data:
+  scalars: [JSON, Map, BigInt, Upload]
+  detail: >-
+    Job.data and File payloads are untyped `JSON`. Shape is declared out-of-band by
+    Job.dataSchemaSlug / File.dataSchemaSlug pointing at a DataSchema, and rendered via
+    Template / DefaultRenderMode.
+file_upload:
+  detail: >-
+    Two-step. A mutation (workspaceUploadFile / jobUploadFile / uploadWorkspaceFile)
+    returns a signed URL, and the client PUTs the bytes directly to it. The GraphQL
+    layer also declares an `Upload` scalar.
+  source: 'pypi:strangeworks==0.7.6 strangeworks/core/client/file.py (signedURL)'
+idempotency:
+  supported: false
+  detail: >-
+    No idempotency key header, parameter or input field appears anywhere in the three
+    GraphQL schemas, and the docs do not describe retry-safe writes. Batch job creation
+    is instead made safe by a two-phase initiate/finalize pair
+    (batchJobInitiateCreate then batchJobFinalizeCreate). No Idempotency pointer is
+    wired in apis.yml.
+  nearest_equivalent: [batchJobInitiateCreate, batchJobFinalizeCreate, touchJob]
+versioning:
+  scheme: unversioned-endpoint
+  detail: >-
+    The three GraphQL endpoints carry no version segment or version header. Change is
+    managed in-schema with GraphQL @deprecated field directives — see
+    lifecycle/strangeworks-lifecycle.yml.
+error_envelope:
+  style: graphql-errors
+  detail: >-
+    GraphQL calls return HTTP 200 with a top-level `errors[]` array; the SDK raises
+    StrangeworksError. The token endpoints and the REST proxy return conventional HTTP
+    status codes with a JSON body of {"message": "...", "description": "..."}.
+  detail_artifact: errors/strangeworks-problem-types.yml
+rate_limits:
+  documented: false
+  detail: >-
+    No rate-limit documentation and no rate-limit response headers were observed on the
+    anonymous probes. Spend is governed instead by workspace and per-member spending
+    limits (SpendingLimitPeriod, workspaceUpdateSpending, workspaceMemberUpdateSpending)
+    and by billing approval (requestBillingApproval, BillingApprovalStatus).
+request_tracing:
+  documented: false
+  detail: No request-id header or correlation-id convention is documented or observed.

@@ -1,0 +1,56 @@
+generated: '2026-08-05'
+method: probed
+source: graphql/*.graphql (live introspection) + https://docs.strangeworks.com/welcome/latest-updates
+versioning:
+  scheme: unversioned-endpoint
+  current: null
+  detail: >-
+    The three GraphQL endpoints (/sdk, /platform, /products) carry no version path
+    segment, no version query parameter and no version header. Change is signalled
+    in-schema via GraphQL @deprecated directives. The Python SDK is versioned
+    independently on PyPI (strangeworks 0.7.6, strangeworks-core 0.5.4).
+  docs: null
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  detail: >-
+    No deprecation policy, sunset schedule or RFC 8594 Sunset/Deprecation header support
+    was found. Deprecation is communicated only through GraphQL's own @deprecated field
+    directive, which does carry a machine-readable reason. No Deprecation pointer is
+    wired in apis.yml because there is no published policy to point at.
+deprecated_fields:
+- {field: 'Job.jobData', reason: Use data instead, schemas: [platform, products, sdk]}
+- {field: 'Job.jobDataSchema', reason: Use dataSchemaSlug instead, schemas: [platform, products, sdk]}
+- {field: 'File.jsonSchema', reason: Use dataSchemaSlug instead, schemas: [platform, products, sdk]}
+status_page:
+  url: null
+  detail: >-
+    status.strangeworks.com resolves and returns HTTP 200, but the body is a generic
+    "Error Page" HTML document, not a status dashboard — it is the platform's catch-all
+    responder, not a published status page. trust.strangeworks.com behaves the same way,
+    307-redirecting to https://strangeworks.com/?proxy_404=trust.strangeworks.com. No
+    StatusPage pointer is wired in apis.yml. Recording a 200 here would be false credit.
+  evidence:
+  - {url: 'https://status.strangeworks.com/', status: 200, body: 'HTML titled "Error Page"'}
+  - {url: 'https://trust.strangeworks.com/', status: 307, redirect: 'https://strangeworks.com/?proxy_404=trust.strangeworks.com'}
+  probed: '2026-08-05'
+sla:
+  url: null
+  uptime_target: null
+  detail: >-
+    No public SLA. A dated service agreement is published at
+    https://strangeworks.com/service-agreement-8-18-2025 (HTTP 200) but is a commercial
+    terms document, not an availability commitment.
+changelog:
+  url: https://docs.strangeworks.com/welcome/latest-updates
+  artifact: changelog/strangeworks-changelog.yml
+support:
+  url: https://strangeworks.com/contact
+  faq: https://docs.strangeworks.com/backstage/faq
+lifecycle_signals_in_schema:
+  soft_delete: 'isDeleted / isDisabled booleans on Job, File, EventSubscription, WorkspaceMember'
+  account_status: 'AccountStatus [ACTIVE, LOCKED]'
+  backend_retirement: 'BackendStatus includes RETIRED and MAINTENANCE'
+  resource_lifecycle: 'ResourceStatus [PENDING_ACTIVATION, ACTIVE, PENDING_DEACTIVATION, DEACTIVE]'
+  termination: 'userAccountTerminate, workspaceDelete, resourceDelete, jobDelete, backendDelete mutations'

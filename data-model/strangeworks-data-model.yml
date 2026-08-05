@@ -1,0 +1,163 @@
+generated: '2026-08-05'
+method: derived
+source: graphql/strangeworks-platform.graphql
+note: >-
+  Entity-relationship graph derived mechanically from the live Strangeworks platform
+  GraphQL schema by walking each OBJECT type's fields and recording every field whose
+  named type is another OBJECT. `via` is the GraphQL field name. Relay *Connection
+  wrappers are collapsed to their node type. Nothing here is inferred beyond the schema.
+identity:
+  primary_key: 'id: ID! (opaque)'
+  natural_key: 'slug: String! — "a workspace-unique (alphanumeric + `_`) identifier"'
+  addressing: >-
+    Slugs are the addressing unit across the API and the REST proxy path
+    (/products/{product_slug}/resource/{resource_slug}/{path}). There are no typed
+    id prefixes.
+root:
+  entity: Workspace
+  detail: >-
+    Workspace is the tenancy root. Jobs, resources, files, members, invites, settings,
+    billing transactions and event subscriptions all hang off it, and "data is never
+    shared between workspaces" per the platform docs.
+entities:
+- name: Workspace
+  domain: tenancy
+  description: Personal or team environment; the tenancy and billing boundary.
+  relationships:
+  - {type: has_many, entity: WorkspaceMember, via: workspaceMembers}
+  - {type: has_many, entity: WorkspaceInvite, via: workspaceInvites}
+  - {type: has_many, entity: WorkspaceSetting, via: workspaceSettings}
+  - {type: has_many, entity: WorkspaceFile, via: files}
+  - {type: has_many, entity: Job, via: jobs}
+  - {type: has_many, entity: Resource, via: resources}
+  - {type: has_many, entity: Product, via: products}
+  - {type: has_many, entity: Product, via: ownedProducts}
+  - {type: has_many, entity: EventSubscription, via: eventSubscriptions}
+  - {type: has_many, entity: BillingTransaction, via: billingTransactions}
+  - {type: has_one, entity: BillingAccount, via: defaultBillingAccount}
+  - {type: has_one, entity: Resource, via: defaultResource}
+  - {type: has_one, entity: UserAccount, via: createdBy}
+- name: UserAccount
+  domain: identity
+  relationships:
+  - {type: has_one, entity: UserProfile, via: userProfile}
+  - {type: has_many, entity: UserAccountFlag, via: userFlags}
+  - {type: has_many, entity: WorkspaceMember, via: workspaceMembers}
+  enums: {status: 'AccountStatus [ACTIVE, LOCKED]'}
+- name: WorkspaceMember
+  domain: identity
+  description: The join entity between a UserAccount and a Workspace; carries the role, the API key and the spending limit.
+  relationships:
+  - {type: belongs_to, entity: Workspace, via: workspace}
+  enums: {role: 'WorkspaceRole [MEMBER, ADMIN, OWNER]'}
+- name: WorkspaceInvite
+  domain: identity
+  relationships:
+  - {type: has_one, entity: UserAccount, via: sender}
+  enums: {status: WorkspaceInviteStatus}
+- name: Product
+  domain: catalog
+  description: An application published on the platform (managed app, compute provider, tool, enterprise or demo).
+  relationships:
+  - {type: belongs_to, entity: Workspace, via: owner}
+  - {type: has_many, entity: Backend, via: backends}
+  - {type: has_many, entity: ProductImage, via: images}
+  - {type: has_many, entity: ProductWebLink, via: webLinks}
+  - {type: has_many, entity: CatalogTag, via: tags}
+  enums: {type: 'ProductType [MANAGED_APP, COMPUTE_PROVIDER, TOOL, ENTERPRISE, DEMO]'}
+- name: CatalogItem
+  domain: catalog
+  description: A Product's listing in the public product catalog.
+  relationships:
+  - {type: has_one, entity: Product, via: product}
+  - {type: has_many, entity: CatalogTag, via: tags}
+- name: Resource
+  domain: execution
+  description: An activated instance of a Product inside a Workspace. Jobs are always submitted to a Resource.
+  relationships:
+  - {type: belongs_to, entity: Product, via: product}
+  - {type: has_many, entity: BillingTransaction, via: billingTransactions}
+  - {type: has_many, entity: ResourceConfiguration, via: configuration}
+  enums: {status: 'ResourceStatus [PENDING_ACTIVATION, ACTIVE, PENDING_DEACTIVATION, DEACTIVE]'}
+- name: Job
+  domain: execution
+  description: A unit of work submitted to a Resource. Self-referencing — jobs spawn child jobs.
+  relationships:
+  - {type: belongs_to, entity: Resource, via: resource}
+  - {type: belongs_to, entity: WorkspaceMember, via: workspaceMember}
+  - {type: has_one, entity: Job, via: parentJob}
+  - {type: has_many, entity: Job, via: childJobs}
+  - {type: has_many, entity: JobFile, via: files}
+  - {type: has_many, entity: AppliedJobTag, via: tags}
+  - {type: has_many, entity: Template, via: templates}
+  enums: {status: 'JobStatus [CREATED, QUEUED, RUNNING, COMPLETED, FAILED, CANCELLING, CANCELLED, ERROR]'}
+  fields_of_note:
+  - 'externalIdentifier — remote id from a downstream compute provider'
+  - 'remoteStatus — downstream provider status string'
+  - 'isTerminalState — schema-provided "job is finished" flag'
+  - 'data: JSON — untyped payload, shape declared by dataSchemaSlug'
+- name: JobFile
+  domain: execution
+  relationships:
+  - {type: has_one, entity: File, via: file}
+- name: File
+  domain: storage
+  description: A stored artifact; bytes are transferred out-of-band via a signed URL.
+  relationships:
+  - {type: has_many, entity: Template, via: templates}
+- name: WorkspaceFile
+  domain: storage
+  relationships:
+  - {type: has_one, entity: File, via: file}
+- name: DataSchema
+  domain: storage
+  description: A JSON schema that Job.data / File payloads conform to, referenced by dataSchemaSlug.
+- name: Template
+  domain: storage
+  description: Render template for a file's data.
+  enums: {render_mode: DefaultRenderMode, type: TemplateType}
+- name: Backend
+  domain: compute
+  description: A compute target published by a Product — a QPU, simulator or optimization solver.
+  relationships:
+  - {type: belongs_to, entity: Product, via: product}
+  - {type: has_many, entity: BackendRegistration, via: backendRegistrations}
+  - {type: has_many, entity: AppliedBackendTag, via: tags}
+  enums: {status: 'BackendStatus [ONLINE, OFFLINE, MAINTENANCE, RETIRED, UNKNOWN]'}
+- name: BackendRegistration
+  domain: compute
+  relationships:
+  - {type: has_one, entity: BackendType, via: backendType}
+- name: BillingAccount
+  domain: billing
+  relationships:
+  - {type: has_many, entity: BillingCredit, via: credits}
+- name: BillingTransaction
+  domain: billing
+  description: A line item created for each paid action; deducted from the billing account.
+  relationships:
+  - {type: belongs_to, entity: Resource, via: resource}
+  - {type: belongs_to, entity: Job, via: job}
+  enums: {status: 'BillingTransactionStatus [PENDING, COMPLETE]', unit: 'BillingTransactionUnit [USD, EUR, MILLISECOND]'}
+- name: BillingCredit
+  domain: billing
+  relationships:
+  - {type: has_one, entity: Product, via: product}
+  - {type: has_one, entity: Resource, via: resource}
+- name: EventSubscription
+  domain: events
+  description: A webhook registration — an endpoint URL bound to one EventType within a workspace.
+  detail_artifact: asyncapi/strangeworks-webhooks.yml
+- name: ServiceAccount
+  domain: identity
+- name: WebLink
+  domain: catalog
+core_path:
+  description: The spine an integrator walks.
+  chain: Workspace -> Product -> Resource -> Job -> JobFile -> File
+  billing_chain: Job -> BillingTransaction -> BillingAccount
+  compute_chain: Product -> Backend -> BackendRegistration -> BackendType
+counts:
+  entities_documented: 22
+  objects_in_platform_schema: 78
+  source_schema: graphql/strangeworks-platform.graphql

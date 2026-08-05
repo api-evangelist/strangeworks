@@ -1,0 +1,1301 @@
+# generated: '2026-08-05'
+# method: probed
+# source: https://api.strangeworks.com/products (anonymous GraphQL introspection, HTTP 200)
+# note: SDL rendered from the live __schema introspection response; Strangeworks does not
+#       publish an SDL file — this is the server's own schema, unmodified in content.
+"""Enumeration of statuses for types conforming to `Account`"""
+enum AccountStatus {
+  ACTIVE
+  LOCKED
+}
+
+enum BackendStatus {
+  ONLINE
+  OFFLINE
+  MAINTENANCE
+  RETIRED
+  UNKNOWN
+}
+
+enum BillingApprovalStatus {
+  PENDING
+  COMPLETE
+  CANCELLED
+}
+
+enum BillingTransactionOrderField {
+  RESOURCE_NAME
+  STATUS
+  DATE_CREATED
+  AMOUNT
+}
+
+"""Enumeration of possible `BillingTransaction` statuses"""
+enum BillingTransactionStatus {
+  PENDING
+  COMPLETE
+}
+
+"""Enumeration of possible `BillingTransaction` units"""
+enum BillingTransactionUnit {
+  USD
+  EUR
+  MILLISECOND
+}
+
+"""Enumeration of currency identifiers"""
+enum Currency {
+  USD
+  EUR
+}
+
+"""DefaultRenderMode is an enum of the different types render modes for web links"""
+enum DefaultRenderMode {
+  LINK
+  FULL
+  EMBED
+}
+
+"""Available value types for an event's type"""
+enum EventType {
+  JOB_COMPLETE
+  JOB_UPDATE
+  REQ_RESP_HEADER
+}
+
+"""The possible values for the GroupBy statement of a job"""
+enum JobGroupBy {
+  PRODUCT
+}
+
+"""Properties by which jobs can be ordered"""
+enum JobOrderField {
+  DATE_COMPLETED
+  DATE_CREATED
+  PRODUCT
+  RESOURCE
+  STATUS
+}
+
+"""The possible system states for a `Job`"""
+enum JobStatus {
+  CREATED
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLING
+  CANCELLED
+  ERROR
+}
+
+"""Possible directions in which to order a list of items when provided an `orderBy` argument."""
+enum OrderDirection {
+  ASC
+  DESC
+}
+
+"""ProductImageType is an enum of the different types of a product image"""
+enum ProductImageType {
+  APP_ICON
+  APP_VERTICAL
+  APP_HORIZONTAL
+  LOGO_CENTER
+  LOGO_LEFT
+  LOGO_RIGHT
+  OTHER
+}
+
+"""ProductType is an enum of the different types of products"""
+enum ProductType {
+  MANAGED_APP
+  COMPUTE_PROVIDER
+  TOOL
+  ENTERPRISE
+  DEMO
+}
+
+"""ProductWebLinkType is an enum of the different types of a product web link"""
+enum ProductWebLinkType {
+  RELATED_LINK
+  APP_UI
+  OTHER
+}
+
+"""Available value types for a ResourceConfiguration"""
+enum ResourceConfigurationValueType {
+  BOOL
+  STRING
+  SECURE
+  INT
+  JSON
+  DATE
+  FLOAT
+}
+
+enum ResourceOrderField {
+  NAME
+  JOB_COUNT
+  DATE_CREATED
+  PRODUCT
+  STATUS
+}
+
+"""Available value types for a Resource's status"""
+enum ResourceStatus {
+  PENDING_ACTIVATION
+  ACTIVE
+  PENDING_DEACTIVATION
+  DEACTIVE
+}
+
+"""Enumeration of spending limit period options"""
+enum SpendingLimitPeriod {
+  MONTHLY
+  ALL_TIME
+}
+
+enum TemplateType {
+  JSON
+}
+
+"""Enumeration of possible `WorkspaceInvite` status"""
+enum WorkspaceInviteStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  FAILED
+}
+
+"""Enumeration of WorkspaceRole values"""
+enum WorkspaceRole {
+  MEMBER
+  ADMIN
+  OWNER
+}
+
+"""Available value types for a WorkspaceSetting"""
+enum WorkspaceSettingValueType {
+  BOOL
+  STRING
+  SECURE
+  INT
+  JSON
+  DATE
+  FLOAT
+}
+
+input BackendAddTypesInput {
+  backendSlug: String!
+  backendTypes: [BackendTypeInput!]
+}
+
+input BackendCreateInput {
+  backends: [ProductBackendInput!]
+}
+
+input BackendDeleteInput {
+  backendSlug: String!
+}
+
+input BackendRemoveTypesInput {
+  backendSlug: String!
+  backendTypeSlugs: [String!]
+}
+
+input BackendTypeInput {
+  typeSlug: String!
+  data: JSON
+}
+
+input BackendUpdateInput {
+  backends: [ProductBackendUpdateInput!]
+}
+
+input BatchOptions {
+  MaxRetries: Int!
+  MaxDuration: Int!
+}
+
+input BillingTransactionCreateInput {
+  resourceSlug: String!
+  jobSlug: String
+  amount: Float!
+  unit: Currency!
+  description: String!
+  memo: String
+  usage_data: JSON
+}
+
+input BillingTransactionOrder {
+  direction: OrderDirection!
+  field: BillingTransactionOrderField!
+}
+
+input Container {
+  ImageURI: String!
+}
+
+"""A type for storing a date range"""
+input DateRangeInput {
+  start: BigInt!
+  end: BigInt!
+}
+
+input FinalizeBatchJobCreateInput {
+  batchJobSlug: String!
+  machine: Machine!
+  machineAccelerator: MachineAccelerator
+  options: BatchOptions
+}
+
+input FinalizeBatchJobCreateProductInput {
+  finalize: FinalizeBatchJobCreateInput!
+  resourceSlug: String!
+  workspaceMemberSlug: String
+}
+
+"""InitiateBatchJobCreateInput
+This is the input to initiate a batch job create.
+Must specify one or the other: program | container"""
+input InitiateBatchJobCreateInput {
+  program: Program
+  container: Container
+  fileName: String!
+  contentType: String!
+  label: String
+  metaFileType: String
+  metaFileSize: Int
+  metaFileCreateDate: Time
+  metaFileModifiedDate: Time
+}
+
+input InitiateBatchJobCreateProductInput {
+  initiate: InitiateBatchJobCreateInput!
+  resourceSlug: String!
+  workspaceMemberSlug: String
+  jobSlug: String
+}
+
+input JobAddTagsInput {
+  resourceSlug: String!
+  jobSlug: String!
+  tags: [String!]!
+}
+
+input JobCreateInput {
+  resourceSlug: String!
+  parentJobSlug: String
+  externalIdentifier: String
+  status: JobStatus
+  remoteStatus: String
+  jobDataSchema: String
+  jobData: JSON
+  workspaceMemberSlug: String
+  experimentTrialId: String
+}
+
+"""Ordering options for jobs"""
+input JobOrder {
+  direction: OrderDirection!
+  field: JobOrderField!
+}
+
+input JobRemoveTagInput {
+  resourceSlug: String!
+  jobSlug: String!
+  tag: String!
+}
+
+input JobTouchInput {
+  resourceSlug: String!
+  jobSlug: String!
+}
+
+input JobUpdateInput {
+  resourceSlug: String
+  jobSlug: String!
+  parentJobSlug: String
+  externalIdentifier: String
+  status: JobStatus
+  remoteStatus: String
+  jobDataSchema: String
+  jobData: JSON
+}
+
+input JobUploadFileInput {
+  resourceSlug: String!
+  jobSlug: String!
+  label: String
+  contentType: String!
+  fileName: String!
+  metaFileType: String
+  metaFileSize: Int
+  metaFileCreateDate: Time
+  metaFileModifiedDate: Time
+  jsonSchema: String
+  shouldOverrideExistingFile: Boolean!
+  isPublic: Boolean! = false
+  isHidden: Boolean! = false
+  sortWeight: Int! = 0
+}
+
+input Machine {
+  Type: String!
+  CPU: Int!
+  Memory: Int!
+}
+
+input MachineAccelerator {
+  Type: String!
+  Count: Int!
+}
+
+"""PaginationInput
+cursor based forward/backward pagination input"""
+input PaginationInput {
+  first: Int
+  after: ID
+  last: Int
+  before: ID
+}
+
+input ProductBackendInput {
+  name: String!
+  remoteBackendId: String!
+  status: BackendStatus!
+  remoteStatus: String
+  data: JSON
+  dataSchema: String
+}
+
+input ProductBackendUpdateInput {
+  backendSlug: String!
+  name: String
+  remoteBackendId: String
+  status: BackendStatus
+  remoteStatus: String
+  data: JSON
+  dataSchema: String
+}
+
+input Program {
+  EntryPoint: String!
+  Language: String!
+  LanguageVersion: String!
+}
+
+input ResourceCreateInput {
+  resourceActivationId: String!
+  status: ResourceStatus!
+  api_route: String
+  resourceConfigurations: [StoreConfigurationInput!]
+}
+
+input ResourceOrder {
+  direction: OrderDirection!
+  field: ResourceOrderField!
+}
+
+input ResourceResetConfigurationInput {
+  resourceSlug: String!
+}
+
+input ResourceStoreConfigurationInput {
+  resourceSlug: String!
+  configuration: StoreConfigurationInput!
+}
+
+input ResourceUpdateInput {
+  resourceSlug: String!
+  api_route: String
+}
+
+input ResourceUpdateStatusInput {
+  resourceSlug: String!
+  status: ResourceStatus!
+}
+
+input StoreConfigurationInput {
+  key: String!
+  type: ResourceConfigurationValueType!
+  valueBool: Boolean
+  valueString: String
+  valueSecure: String
+  valueInt: Int
+  valueJson: String
+  valueDate: Time
+  valueFloat: Float
+  isEditable: Boolean!
+  isInternal: Boolean!
+}
+
+"""Represents a user or service account"""
+interface Account {
+  name: String!
+  email: String!
+  status: AccountStatus!
+}
+
+"""Represents a `BackendTag` that has been applied to a `Backend`"""
+type AppliedBackendTag {
+  id: ID!
+  "The tag value"
+  tag: String!
+  "An optional display name for the tag (usually for formatting purposes)"
+  displayName: String
+  "A logical group for this tag. This can be useful to show a filter groups, etc."
+  tagGroup: String
+  "Specifies if the tag was created by the user or by the system"
+  isSystem: Boolean!
+}
+
+"""A tag applied to a `Job`"""
+type AppliedJobTag {
+  "A tag which can be applied to a `Job`"
+  tag: JobTag!
+  "Determines if the tag was added automatically by the system, or from a user"
+  isSystem: Boolean!
+  "The date/time when the tag was applied"
+  dateCreated: Time!
+}
+
+"""A compute resource backend/target for a `Product`."""
+type Backend {
+  id: ID!
+  "A Strangeworks unique slug/key for this backend."
+  slug: String!
+  "The associated `Product` that owns this backend."
+  product: Product!
+  "The name to be displayed for this backend."
+  name: String!
+  "The Strangeworks status of the backend"
+  status: BackendStatus!
+  "The unique identifier used by the remote provider to identify this backend."
+  remoteBackendId: String!
+  "A provider-specific status"
+  remoteStatus: String
+  "A json object representing backend detail from provider."
+  data: JSON
+  "optional url reference to a JsonSchema document"
+  dataSchema: String
+  "Time of the last remote status/data refresh"
+  dateRefreshed: Time
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "An array of `BackendTag` for this backend"
+  tags: [AppliedBackendTag!]!
+  "An array of `BackendRegistration` for which this backend conforms"
+  backendRegistrations: [BackendRegistration!]!
+}
+
+type BackendAddTypesOutput {
+  backendSlug: String!
+  backendTypeSlugs: [String!]
+}
+
+type BackendCreateOutput {
+  backends: [Backend!]
+}
+
+"""`BackendRegistration` represents the conformance of a `BackendType` by a `Backend`."""
+type BackendRegistration {
+  backendTypeId: String!
+  "The `BackendType` of this registration"
+  backendType: BackendType!
+  "Returns the `Backend`'s data for the given type"
+  data: JSON
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+type BackendRemoveTypesOutput {
+  backendSlug: String!
+  backendTypeSlugs: [String!]
+}
+
+"""A system-level type definition for which `Backend`s may register/conform."""
+type BackendType {
+  id: ID!
+  "A Strangeworks unique slug/key for this backend type."
+  slug: String!
+  "An optional display name for this type"
+  displayName: String
+  "An optional description for this type"
+  description: String
+  "A url reference to a JsonSchema document for which backends of this type must conform"
+  schemaURL: String
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+type BackendUpdateOutput {
+  backends: [Backend!]
+}
+
+"""Represents a Workspace's billing account to which invoices may be issued"""
+type BillingAccount {
+  id: ID!
+  "The associated customer identifier in Stripe"
+  stripeCustomerId: String
+  "The last known balance in Stripe"
+  stripeBalance: Float!
+  "The unit of currency for the Stripe balance"
+  stripeBalanceUnit: Currency
+  "The date of most recent balance update from Stripe"
+  stripeBalanceDateUpdated: Time
+  "The calculated value of the stripeBalance minus the totalPendingAmount."
+  balance: Float!
+  "The total amount of pending billing transactions"
+  totalPendingAmount: Float!
+  "Specifies if the member has been soft-deleted"
+  isDeleted: Boolean!
+  "Indicates if this `BillingAccount` allows charges"
+  isDisabled: Boolean!
+  "Indicates if a charges are allowed that will knowingly surpass the balance"
+  allowNegativeBalance: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "The email associated with the billing account"
+  billingEmail: String
+  "Billing credits added to this account"
+  credits: [BillingCredit!]
+}
+
+"""represents a billing credit that can be utilized in favor of the blaance ofn a billing account"""
+type BillingCredit {
+  "ID of the billing credit"
+  id: ID!
+  "originalAmount of the billing credit in cents (2 decimal places)"
+  originalAmount: Float!
+  "remainingAmount of the billing credit in cents (2 decimal places)"
+  remainingAmount: Float!
+  "unit of the billing credit"
+  unit: BillingTransactionUnit!
+  "product slug related to the billing credit, can be null if credit belongs to resource or workspace"
+  product: Product
+  "resource associated with the billing credit, can be null if credit belongs to a product or workspace"
+  resource: Resource
+  "workspace slug of the workspace the credit this credit belongs to. not null. If product and resource are empty the credit can be used workspace wide"
+  workspaceSlug: String!
+  "expiration date of the credit, null if no expiration was set"
+  expirationDate: Time
+}
+
+"""Represents a transaction to be billed against a Resource"""
+type BillingTransaction {
+  id: ID!
+  "The `Resource` from whom the transaction derived"
+  resource: Resource!
+  "The associated Job"
+  job: Job
+  "The status of the billing transaction"
+  status: BillingTransactionStatus!
+  "A short (70 char max) line item description of the charge"
+  description: String!
+  "Additional detail about the transaction (max 255 chars)"
+  memo: String
+  "The total amount of the charge. Positive is a credit, negative is a deduction."
+  amount: Float!
+  "The currency unit of `amount`"
+  unit: BillingTransactionUnit!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "Usage Data"
+  usage_data: JSON
+}
+
+type BillingTransactionConnection {
+  edges: [BillingTransactionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type BillingTransactionCreateOutput {
+  billingTransaction: BillingTransaction!
+  appliedCredits: [BillingCredit!]!
+}
+
+type BillingTransactionEdge {
+  node: BillingTransaction
+  cursor: ID!
+}
+
+type CatalogItem {
+  id: ID!
+  "The associated `Product`"
+  product: Product!
+  "Indicates that the item should be highlighted in the catalog"
+  isFeatured: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "An array of (non-internal) CatalogTag items assigned to this CatalogItem"
+  tags: [CatalogTag!]!
+}
+
+"""A tag which can be applied to a `CatalogItem`"""
+type CatalogTag {
+  id: ID!
+  "The tag value"
+  tag: String!
+  "An optional display name for the tag (usually for formatting purposes)"
+  displayName: String
+  "A logical group for this tag. This can be useful to show a filter groups, etc."
+  tagGroup: String
+}
+
+"""Represents a data schema that can be accessed via the system"""
+type DataSchema {
+  id: ID!
+  name: String!
+  template: String!
+}
+
+"""Represents a subscription for a webhook"""
+type EventSubscription {
+  id: ID!
+  "A workspace-unique (alphanumeric + `_`) identifier"
+  slug: String!
+  "The name of the event subscription"
+  name: String!
+  "The event type of the event subscription"
+  eventType: EventType!
+  "The endpoint for the webhook associated with the event subscription"
+  endpoint: String!
+  "Indicates if the item is disabled"
+  isDisabled: Boolean!
+  "Indicates if the item is soft-deleted"
+  isDeleted: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+type File {
+  id: ID!
+  "A globally-unique autogenerated random short ID suitable for use in a url"
+  slug: String!
+  "An alternate display name for this file"
+  label: String
+  "File named (extracted from `filePath`)"
+  fileName: String!
+  "A full url to download the file. It may require authentication and authorization if not public."
+  url: String!
+  "The type of file, typically expressed as a file extension (json, jpg, csv, etc)"
+  metaFileType: String
+  "Date when the file was created"
+  metaDateCreated: Time
+  "Date when the file was last modified"
+  metaDateModified: Time
+  "File size in bytes"
+  metaSizeBytes: BigInt
+  "A path to a JSON schema to which this file conforms"
+  jsonSchema: String @deprecated
+  "The slug for a data schema to which the file data conforms"
+  dataSchemaSlug: String
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+type FinalizeBatchJobCreateOutput {
+  "batchJobSlug is the unique identifier for the batch job."
+  batchJobSlug: String!
+}
+
+"""A type for storing graph data"""
+type GraphData {
+  x: BigInt!
+  y: Int!
+}
+
+type InitiateBatchJobCreateOutput {
+  "batchJobSlug is the unique identifier for the batch job. this is what is expected back in the FinalizeBatchJobCreateInput to officially kick of the batch job."
+  batchJobSlug: String!
+  "signedURL is the url the platform expects the client to upload their file to."
+  signedURL: String!
+}
+
+"""A Job artifact created from a `Resource`"""
+type Job {
+  id: ID!
+  "A parent `Job` who spawned and owns this one. (If null, this job is a root-level job.)"
+  parentJob: Job
+  "All children `Jobs` that were spawned from this `Job`"
+  childJobs: [Job!]!
+  "A remote identifier for this `Job`. Typically from an external system."
+  externalIdentifier: String
+  "A workspace-unique (alphanumeric + `_`) identifier"
+  slug: String!
+  "The `Resource` from which this `Job` derived"
+  resource: Resource!
+  "The current status of the `Job`"
+  status: JobStatus!
+  "True if this job is terminal (Completed, Failed, Cancelled, etc"
+  isTerminalState: Boolean!
+  "A status returned by an external system, if applicable"
+  remoteStatus: String
+  "A path to a JSON schema to which `jobData` conforms"
+  jobDataSchema: String @deprecated
+  "The slug for a data schema to which `jobData` conforms"
+  dataSchemaSlug: String
+  "JSON object containing job information"
+  jobData: JSON @deprecated
+  "JSON object containing job information"
+  data: JSON
+  "Date the remote job was created, if available"
+  dateJobCreated: Time
+  "Date the remote job started, if available"
+  dateJobStarted: Time
+  "Date the remote job completed/failed, if available"
+  dateJobCompleted: Time
+  "Indicates if the account is soft-deleted"
+  isDeleted: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "Returns `File` information for each non-hidden associated job file. (Order is currently determined by the server based on custom rules.)"
+  files: [JobFile!]!
+  "A list of JobTag items associated with the job"
+  tags: [AppliedJobTag!]!
+}
+
+type JobAddTagsOutput {
+  tags: [AppliedJobTag!]!
+}
+
+type JobConnection {
+  edges: [JobEdge!]!
+  pageInfo: PageInfo!
+  jobStatusCounts: [JobStatusCount!]!
+  jobGraph: [JobGraph]
+}
+
+type JobCreateOutput {
+  job: Job!
+}
+
+type JobEdge {
+  node: Job
+  cursor: ID!
+}
+
+"""Includes a `File` object as well as additional fields for use in the context of a `Job`"""
+type JobFile {
+  "The `File` object attached to this `Job`"
+  file: File!
+  "Indicates if this file is publicly accessible. By default files are only visible to those with access to the job."
+  isPublic: Boolean!
+  "Provides the sort order for this file in lists. Higher is displayed first."
+  sortWeight: Int!
+}
+
+type JobGraph {
+  group: String!
+  data: [GraphData]!
+}
+
+type JobRemoveTagOutput {
+  tags: [AppliedJobTag!]!
+}
+
+type JobStatusCount {
+  status: JobStatus!
+  count: Int!
+}
+
+"""A tag which can be applied to a `Job`"""
+type JobTag {
+  id: ID!
+  "The tag value"
+  tag: String!
+  "An optional display name for the tag (usually for formatting purposes)"
+  displayName: String
+  "A logical group for this tag. This can be useful to show a filter groups, etc."
+  tagGroup: String
+}
+
+type JobTouchOutput {
+  job: Job!
+}
+
+type JobUpdateOutput {
+  job: Job!
+}
+
+type JobUploadFileOutput {
+  "signedURL is the url the platform expects the client to upload their file to."
+  signedURL: String!
+  "file contains information about the file that will be uploaded.  It also contains the url of where you can download the file once it is uploaded to the signedURL."
+  file: File!
+}
+
+type Mutation {
+  "Creates a new `Resource` from a `ResourceActivation` request."
+  resourceCreate(input: ResourceCreateInput!): ResourceCreateOutput
+  "Updates select fields of a `Resource`."
+  resourceUpdate(input: ResourceUpdateInput!): ResourceUpdateOutput
+  "Updates the status of a `Resource`."
+  resourceUpdateStatus(input: ResourceUpdateStatusInput!): ResourceUpdateStatusOutput
+  "Sets a configuration variable for a `Resource`."
+  resourceStoreConfiguration(input: ResourceStoreConfigurationInput!): ResourceStoreConfigurationOutput
+  "Removes all configuration variables for a `Resource`"
+  resourceResetConfiguration(input: ResourceResetConfigurationInput!): Boolean!
+  "Creates a new `Job` for a `Resource`."
+  jobCreate(input: JobCreateInput!): JobCreateOutput
+  "Updates select fields of a `Job`."
+  jobUpdate(input: JobUpdateInput!): JobUpdateOutput
+  "Touch job updates the last updated time of a job"
+  touchJob(input: JobTouchInput!): JobTouchOutput
+  "Uploads a `File` to a `Job`."
+  jobUploadFile(input: JobUploadFileInput!): JobUploadFileOutput
+  "Adds a system `Tag` to a `Job`."
+  jobAddTags(input: JobAddTagsInput!): JobAddTagsOutput
+  "Removes a system `Tag` from a `Job`."
+  jobRemoveTag(input: JobRemoveTagInput!): JobRemoveTagOutput
+  "Creates a `BillingTransaction` for a `Resource`, which may also be associated to a `Job`."
+  billingTransactionCreate(input: BillingTransactionCreateInput!): BillingTransactionCreateOutput
+  "Creates `Backend`s for the  product."
+  backendCreate(input: BackendCreateInput!): BackendCreateOutput
+  "Delete `Backend` from the product."
+  backendDelete(input: BackendDeleteInput!): Boolean!
+  "Updates product `Backend`s."
+  backendUpdate(input: BackendUpdateInput!): BackendUpdateOutput
+  "Add type slugs for a backend."
+  backendAddTypes(input: BackendAddTypesInput!): BackendAddTypesOutput
+  "Remove type slugs for a backend."
+  backendRemoveTypes(input: BackendRemoveTypesInput!): BackendRemoveTypesOutput
+  "Initiate a batch job creation step.    This is the first step in creating a batch job.    The response will contain a batchJobSlug which will be used in the next step.    The response also contains a signedURL which is the url the platform expects the client to upload their file to."
+  batchJobInitiateCreate(input: InitiateBatchJobCreateProductInput!): InitiateBatchJobCreateOutput!
+  "Finalize a batch job creation step. This is the second step in creating a batch job. Now your batch job is ready to be processed. Once a request to this mutation is made, it is assumed that the client has uploaded their file to the signedURL."
+  batchJobFinalizeCreate(input: FinalizeBatchJobCreateProductInput!): FinalizeBatchJobCreateOutput!
+}
+
+"""PageInfo 
+As described by https://relay.dev/graphql/connections.htm#sec-undefined.PageInfo"""
+type PageInfo {
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  startCursor: ID!
+  endCursor: ID!
+}
+
+"""Represents a product or service offered through the platform"""
+type Product {
+  id: ID!
+  "A globally-unique (alphanumeric + `_`) product identifier"
+  slug: String!
+  "Display name"
+  name: String!
+  "Description of the Product's type"
+  productType: ProductType!
+  "An `https://` url pointing to an image suitable for representing product listing"
+  logoUrl: String
+  "A short (max 255 chars) description describing the product"
+  shortDescription: String
+  "Detailed markdown overview content to be shown on the product homepage"
+  overview: String
+  "An `https://` url pointing to the product's documentation"
+  documentationUrl: String
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "A list of images associated with the product"
+  images: [ProductImage!]
+  "Get a list of `Backend`s for this `Product`"
+  backends(status: BackendStatus, remoteBackendId: String): [Backend!]
+}
+
+"""The `ProductImage` for a `Product`"""
+type ProductImage {
+  "The type of the product image"
+  type: ProductImageType!
+  "Denotes whether or not the image should be publicly visible"
+  isPublic: Boolean!
+  "The file details for the image file"
+  imageFile: File!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+"""The `ProductWebLink` for a `Product`"""
+type ProductWebLink {
+  "The type of the product web link"
+  type: ProductWebLinkType!
+  "The sort weight of the product web link. Higher values are sorted first"
+  sortWeight: Int!
+  "If true, this link expects to receive a resource_slug as a querystring parameter"
+  isResourceRequired: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "The web link for the product"
+  webLink: WebLink!
+}
+
+type Query {
+  "The current authenticated Product"
+  viewer: Product!
+  "Get Backends available on strangeworks platform."
+  backends(productSlugs: [String!], backendTypeSlugs: [String!], backendStatuses: [BackendStatus!], backendTags: [String!]): [Backend!]!
+  "Determines if the current resource may submit a billing transaction for a specific amount"
+  requestBillingApproval(resourceSlug: String!, workspaceMemberSlug: String!, amount: Float!, currency: Currency!): RequestBillingApprovalOutput
+  "Returns a job given the slug"
+  job(resourceSlug: String, jobSlug: String!): Job
+  jobs(resourceSlug: String, externalIdentifier: String, statuses: [JobStatus!], parentJobSlug: String, jobTags: [String!], pagination: PaginationInput): JobConnection
+  "Returns a `Resource` by its slug"
+  resource(resourceSlug: String!): Resource
+  "Returns a list of `Resource`s that match the given search query"
+  resources(status: [ResourceStatus!]): [Resource!]!
+}
+
+type RequestBillingApprovalOutput {
+  isApproved: Boolean!
+  "A description of why the approval was rejected"
+  rejectionMessage: String
+}
+
+"""Represents a Workspace-owned instance of a `Product`"""
+type Resource {
+  id: ID!
+  "A workspace-unique (alphanumeric + `_`) identifier"
+  slug: String!
+  "The Product this Resource instantiates"
+  product: Product!
+  "The current status of the Resource as set by the Product/Service"
+  status: ResourceStatus!
+  "Indicates if the item is soft-deleted"
+  isDeleted: Boolean!
+  "Denotes whether or not this a default resource for the given product"
+  isDefault: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "Returns a list of all the configurations for the given resource."
+  configurations(keys: [String!]): [ResourceConfiguration!]!
+  "Base URL route to the api interface (update job, cancel job, etc). If null, this defaults to the associated `Product` apiRoute."
+  apiRoute: String
+}
+
+"""A Key/Value Resource Configuration"""
+type ResourceConfiguration {
+  key: String!
+  "This value determines which value key contains the one true value for the key"
+  type: ResourceConfigurationValueType!
+  valueBool: Boolean
+  valueString: String
+  valueSecure: String
+  valueInt: Int
+  valueJson: String
+  valueDate: Time
+  valueFloat: Float
+  "Specifies if the `Resource` owner may edit this configuration value"
+  isEditable: Boolean!
+  "Specifies if this configuration can be seen by the user, or is used only by the service."
+  isInternal: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+type ResourceConnection {
+  edges: [ResourceEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ResourceCreateOutput {
+  resource: Resource!
+}
+
+type ResourceEdge {
+  node: Resource
+  cursor: ID!
+}
+
+type ResourceStoreConfigurationOutput {
+  resourceConfiguration: ResourceConfiguration!
+}
+
+type ResourceUpdateOutput {
+  resource: Resource!
+}
+
+type ResourceUpdateStatusOutput {
+  resource: Resource!
+}
+
+"""`ServiceAccount` represents a workspace-owned non-user account typically used for machine-to-machine integration."""
+type ServiceAccount implements Account {
+  id: ID!
+  "A globally-unique autogenerated random short ID suitable for use in a url"
+  slug: String!
+  "Display name of the `ServiceAccount`"
+  name: String!
+  "Represents the current state of the `ServiceAccount`"
+  status: AccountStatus!
+  "A unique auto-generated email address associated with the `ServiceAccount`"
+  email: String!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "Indicates if the account is soft-deleted"
+  isDeleted: Boolean!
+}
+
+type Template {
+  "The type of the template"
+  type: TemplateType!
+  "The content of the template"
+  content: String!
+}
+
+"""A system-level user account"""
+type UserAccount implements Account {
+  id: ID!
+  "A globally-unique autogenerated random short ID suitable for use in a url"
+  slug: String!
+  "The full name of the user, concatenated from prefix, first, last, and suffix"
+  name: String!
+  "The first name of the user"
+  firstName: String!
+  "The last name of the user"
+  lastName: String
+  "The email address associated with the user"
+  email: String!
+  "An `https://` url pointing to an image suitable for avatar display"
+  avatarUrl: String
+  "The referring source of the user during signup"
+  source: String
+  "Indicates if the user email address has been verified"
+  isEmailVerified: Boolean!
+  "The current state of the account"
+  status: AccountStatus!
+  "Indicates if the account is soft-deleted"
+  isDeleted: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "The user's UserProfile"
+  userProfile: UserProfile
+  "All of the user's (non-internal) user flags"
+  userFlags: [UserAccountFlag!]!
+  "All of the current user's workspace memberships"
+  workspaceMembers: [WorkspaceMember!]!
+}
+
+"""`UserAccountFlag` represents a derived flag using a user's overridden value, or the default value."""
+type UserAccountFlag {
+  "a unique identifier (alphanumeric + `_`)"
+  key: String!
+  "The current (derived) value. If not overridden, this will reflect the global default value."
+  value: Boolean!
+  "The global default value for this key"
+  defaultValue: Boolean
+  "Indicates if the user is allowed to change the value of this flag directly"
+  isEditable: Boolean!
+  "Indicates if the value was replaced for the user, or if it used the default value"
+  isOverridden: Boolean!
+  "A description of this key's purpose"
+  description: String
+  "Specifies if this value should be returned to the user"
+  isInternal: Boolean!
+  "Date this key was overridden (if `isOverridden` is true), else when the default was created"
+  dateCreated: Time!
+  "Date this record was last updated"
+  dateUpdated: Time!
+}
+
+"""UserProfile contains profile information for a `UserAccount`, usually collected during initial onboarding."""
+type UserProfile {
+  id: ID!
+  "Answer to 'What is your interest in quantum?'"
+  quantumInterest: String
+  "Answer to 'What industry are you in?'"
+  industry: String
+  "Answer to 'Name of Affiliated Organization'"
+  organization: String
+  "Answer to 'Your Role or Title at the organization'"
+  roleOrTitle: String
+  "Answer to 'How experienced are you with quantum code?'"
+  quantumCodeExperience: String
+  "Answer to 'Where did you hear about our Strangeworks?'"
+  howDidYouHear: String
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+"""Represents a web link"""
+type WebLink {
+  id: ID!
+  "A globally-unique (alphanumeric + `_`) product identifier"
+  slug: String!
+  "Display name"
+  displayName: String!
+  "Description of the web link"
+  description: String
+  "URL of the web link"
+  url: String!
+  "Denotes whether or not a link can be embedded"
+  isEmbeddable: Boolean
+  "The default render mode of the web link"
+  defaultRenderMode: DefaultRenderMode!
+  "A list of attributes specific to a web links default render mode"
+  attributes: JSON
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+"""Workspaces are shared by members and own `Job`s and other shared resources"""
+type Workspace {
+  id: ID!
+  "A globally unique (alphanumeric + `_`) identifier"
+  slug: String!
+  "Display name of the `Workspace`"
+  name: String!
+  "The display name of the associated organization"
+  organization: String
+  "An `https://` url pointing to an image suitable for avatar display"
+  avatarUrl: String
+  "Specifies if the Workspace is currently in a disabled/locked state"
+  isDisabled: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "Grab a workspace file through the file slug"
+  file(slug: String!): WorkspaceFile!
+  files(pagination: PaginationInput): WorkspaceFileConnection!
+}
+
+"""Includes a `File` object as well as additional fields for use in the context of a `Workspace`"""
+type WorkspaceFile {
+  "The `File` object attached to this `Workspace`"
+  file: File!
+}
+
+type WorkspaceFileConnection {
+  edges: [WorkspaceFileEdge!]!
+  pageInfo: PageInfo!
+}
+
+type WorkspaceFileEdge {
+  cursor: ID!
+  node: WorkspaceFile
+}
+
+"""WorkspaceInvite represents an invite to a Workspace"""
+type WorkspaceInvite {
+  id: ID!
+  "A globally-unique autogenerated random short ID suitable for use in a url"
+  slug: String!
+  "The `UserAccount` from whom the invite was sent"
+  sender: UserAccount!
+  "The current status of the invite"
+  status: WorkspaceInviteStatus!
+  "The email address of the invitee"
+  email: String!
+  "Specifies the role to be assigned to the invitee once accepted"
+  role: WorkspaceRole!
+  "The date and time when the invite was accepted or rejected by the invitee. If null, the invite has no response."
+  dateActioned: Time
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+"""WorkspaceMember provides either a `UserAccount` or `ServiceAccount` membership into a `Workspace`."""
+type WorkspaceMember {
+  id: ID!
+  "A globally-unique autogenerated random short ID suitable for use in a url"
+  slug: String!
+  "The associated account (a global `UserAccount` or a Workspace's `ServiceAccount`)"
+  account: Account!
+  "The `Workspace` role assigned to the member"
+  role: WorkspaceRole!
+  "Specifies if the user's access to the `Workspace` is disabled"
+  isDisabled: Boolean!
+  "The API key for the member to interact with this `Workspace`"
+  apiKey: String
+  "Date and time of API key generation"
+  apiKeyTimestamp: Time
+  "Specifies if the member has a spending limit enabled"
+  spendingLimitEnabled: Boolean!
+  "The maximum amount of member spending allowed for the period"
+  spendingLimit: Float
+  "The currency of the `spendingLimit`"
+  spendingLimitCurrency: Currency
+  "The period for which the `spendingLimit` is applied"
+  spendingLimitPeriod: SpendingLimitPeriod
+  "Specifies if the member has been soft-deleted"
+  isDeleted: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "The `Workspace` for this membership"
+  workspace: Workspace!
+}
+
+"""A Key/Value Workspace Setting"""
+type WorkspaceSetting {
+  key: String!
+  "This value determines which value key contains the one true value for the key"
+  type: WorkspaceSettingValueType!
+  valueBool: Boolean
+  valueString: String
+  valueSecure: String
+  valueInt: Int
+  valueJson: String
+  valueDate: Time
+  valueFloat: Float
+  isEditable: Boolean!
+}
+
+scalar BigInt
+
+"""The `Boolean` scalar type represents `true` or `false`."""
+
+"""The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point)."""
+
+"""The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as "4") or integer (such as 4) input value will be accepted as an ID."""
+
+"""The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1."""
+
+scalar JSON
+
+scalar Map
+
+"""The `String`scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text."""
+
+"""Time in RFC3339 format, as returned by Golang's [time.RFC3339Nano](https://pkg.go.dev/time#pkg-constants) format"""
+scalar Time
+
+"""The `UploadFile, // b.txt` scalar type represents a multipart file upload."""
+scalar Upload

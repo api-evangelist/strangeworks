@@ -1,0 +1,111 @@
+generated: '2026-08-05'
+method: derived
+status: candidate
+source: graphql/strangeworks-sdk.graphql + graphql/strangeworks-platform.graphql
+note: >-
+  Strangeworks publishes NO MCP server. Searched the docs, the public GitHub org, npm
+  (@modelcontextprotocol/*, strangeworks) and the web — nothing. There is no
+  /.well-known/oauth-protected-resource or oauth-authorization-server on any host (all
+  404), which is what a hosted MCP server would advertise. The tool set below is a
+  CANDIDATE derived from the live GraphQL schemas: every tool binds to a real, named
+  query or mutation, so each one's input contract is that field's real argument list. It
+  is a proposal for what a Strangeworks MCP server would expose, not a claim that one
+  exists. No fabricated tools.
+server:
+  name: strangeworks
+  transport: null
+  url: null
+  published: false
+searched:
+- {target: 'https://docs.strangeworks.com/ (full sitemap, 44 pages)', result: no MCP page}
+- {target: 'https://github.com/strangeworks', result: 'one public repo (examples); no MCP server'}
+- {target: 'npm strangeworks / @strangeworks/sdk', result: 404}
+- {target: 'https://api.strangeworks.com/.well-known/oauth-protected-resource', result: 404}
+- {target: web search for a Strangeworks MCP server, result: no result}
+auth_if_built:
+  model: bearer JWT exchanged from a workspace API key at POST https://api.strangeworks.com/users/token
+  detail: authentication/strangeworks-authentication.yml
+tools:
+- name: list_backends
+  category: compute
+  description: List the compute backends (QPUs, simulators, optimization solvers) available to the workspace.
+  source_operation: graphql/strangeworks-sdk.graphql#Query.backends
+- name: get_backend
+  category: compute
+  description: Get one compute backend by slug, including its status and registrations.
+  source_operation: graphql/strangeworks-sdk.graphql#Query.backend
+- name: get_workspace
+  category: workspace
+  description: Get the workspace the caller's API key belongs to, with members, settings and defaults.
+  source_operation: graphql/strangeworks-sdk.graphql#Query.workspace
+- name: list_jobs
+  category: jobs
+  description: >-
+    List jobs in the workspace with cursor pagination, filtering by status, resource,
+    product, tags, member, date range and free-text query.
+  source_operation: graphql/strangeworks-platform.graphql#Workspace.jobs
+- name: get_job
+  category: jobs
+  description: Get one job by slug, with status, files, tags, child jobs and timings.
+  source_operation: graphql/strangeworks-platform.graphql#Workspace.job
+- name: add_job_tags
+  category: jobs
+  description: Attach tags to a job.
+  source_operation: graphql/strangeworks-sdk.graphql#Mutation.jobAddTags
+- name: remove_job_tag
+  category: jobs
+  description: Remove a tag from a job.
+  source_operation: graphql/strangeworks-platform.graphql#Mutation.jobRemoveTag
+- name: delete_job
+  category: jobs
+  description: Soft-delete a job.
+  source_operation: graphql/strangeworks-platform.graphql#Mutation.jobDelete
+- name: initiate_batch_job
+  category: jobs
+  description: Begin a two-phase batch job creation.
+  source_operation: graphql/strangeworks-sdk.graphql#Mutation.batchJobInitiateCreate
+- name: finalize_batch_job
+  category: jobs
+  description: Complete a two-phase batch job creation.
+  source_operation: graphql/strangeworks-sdk.graphql#Mutation.batchJobFinalizeCreate
+- name: list_resources
+  category: resources
+  description: List activated product instances (resources) in the workspace.
+  source_operation: graphql/strangeworks-platform.graphql#Workspace.resources
+- name: get_resource
+  category: resources
+  description: Get one resource by slug, with its product, configuration and status.
+  source_operation: graphql/strangeworks-platform.graphql#Workspace.resource
+- name: create_resource
+  category: resources
+  description: Activate a product into a new resource in the workspace.
+  source_operation: graphql/strangeworks-platform.graphql#Mutation.resourceCreate
+- name: set_default_resource
+  category: resources
+  description: Set the workspace default resource for a product.
+  source_operation: graphql/strangeworks-platform.graphql#Mutation.resourceSetDefault
+- name: list_product_catalog
+  category: catalog
+  description: Browse the public Strangeworks product catalog.
+  source_operation: graphql/strangeworks-platform.graphql#Query.productCatalog
+- name: get_product
+  category: catalog
+  description: Get one product with its backends, images, web links and tags.
+  source_operation: graphql/strangeworks-platform.graphql#Query.product
+- name: upload_workspace_file
+  category: files
+  description: Upload a file to the workspace (returns a signed URL for the byte transfer).
+  source_operation: graphql/strangeworks-sdk.graphql#Mutation.workspaceUploadFile
+- name: list_billing_transactions
+  category: billing
+  description: List billing line items for the workspace with cursor pagination and ordering.
+  source_operation: graphql/strangeworks-platform.graphql#Workspace.billingTransactions
+- name: create_event_subscription
+  category: events
+  description: Register a webhook endpoint for JOB_COMPLETE, JOB_UPDATE or REQ_RESP_HEADER.
+  source_operation: graphql/strangeworks-platform.graphql#Mutation.eventSubscriptionCreate
+- name: list_event_subscriptions
+  category: events
+  description: List the workspace's webhook subscriptions.
+  source_operation: graphql/strangeworks-platform.graphql#Workspace.eventSubscriptions
+tool_count: 20

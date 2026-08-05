@@ -1,0 +1,87 @@
+generated: '2026-08-05'
+method: derived
+source: >-
+  Derived by binding each candidate MCP tool in mcp/strangeworks-mcp.yml to the real
+  GraphQL field that backs it, across the three live schemas captured in graphql/.
+purpose: >-
+  Strangeworks has no OpenAPI and no MCP server, so the usual REST<->MCP crosswalk does
+  not apply. What it does have is THREE overlapping-but-non-identical GraphQL projections
+  of one data core (sdk, platform, products) plus an untyped REST proxy. This file records
+  that divergence: which capability is reachable from which surface, so nothing is silently
+  dropped. Every binding names a field that exists verbatim in the captured SDL.
+surfaces:
+  openapi: null   # none published; probed /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs, /docs, /redoc -> all 404
+  graphql:
+  - {name: sdk, endpoint: 'https://api.strangeworks.com/sdk', introspection: open-anonymous, queries: 3, mutations: 4, types: 100}
+  - {name: platform, endpoint: 'https://api.strangeworks.com/platform', introspection: open-anonymous, queries: 11, mutations: 56, types: 191}
+  - {name: products, endpoint: 'https://api.strangeworks.com/products', introspection: open-anonymous, queries: 7, mutations: 19, types: 134}
+  rest_proxy:
+    pattern: https://api.strangeworks.com/products/{product_slug}/resource/{resource_slug}/{path}
+    typed: false
+    note: >-
+      Product-defined passthrough. There is no fixed operation set, so no operation here
+      can be crosswalked — this is a real, uncatalogable surface, not an omission.
+  mcp: null   # no MCP server published; tools below are candidates
+crosswalk:
+- {tool: list_backends, category: compute, graphql: [sdk.Query.backends, platform.Query.backends, products.Query.backends], binding: graphql, confidence: high}
+- {tool: get_backend, category: compute, graphql: [sdk.Query.backend, platform.Query.backend], binding: graphql, confidence: high}
+- {tool: get_workspace, category: workspace, graphql: [sdk.Query.workspace, platform.Query.workspace], binding: graphql, confidence: high}
+- {tool: list_jobs, category: jobs, graphql: [platform.Workspace.jobs, products.Query.jobs], binding: graphql, confidence: high, note: 'Relay connection; args include status, resourceSlug, productSlug, tags, dateRange, groupBy, q.'}
+- {tool: get_job, category: jobs, graphql: [platform.Workspace.job, products.Query.job], binding: graphql, confidence: high}
+- {tool: add_job_tags, category: jobs, graphql: [sdk.Mutation.jobAddTags, platform.Mutation.jobAddTags, products.Mutation.jobAddTags], binding: graphql, confidence: high}
+- {tool: remove_job_tag, category: jobs, graphql: [platform.Mutation.jobRemoveTag, products.Mutation.jobRemoveTag], binding: graphql, confidence: high}
+- {tool: delete_job, category: jobs, graphql: [platform.Mutation.jobDelete], binding: graphql, confidence: high}
+- {tool: initiate_batch_job, category: jobs, graphql: [sdk.Mutation.batchJobInitiateCreate, products.Mutation.batchJobInitiateCreate], binding: graphql, confidence: high}
+- {tool: finalize_batch_job, category: jobs, graphql: [sdk.Mutation.batchJobFinalizeCreate, products.Mutation.batchJobFinalizeCreate], binding: graphql, confidence: high}
+- {tool: list_resources, category: resources, graphql: [platform.Workspace.resources, products.Query.resources], binding: graphql, confidence: high}
+- {tool: get_resource, category: resources, graphql: [platform.Workspace.resource, products.Query.resource], binding: graphql, confidence: high}
+- {tool: create_resource, category: resources, graphql: [platform.Mutation.resourceCreate, products.Mutation.resourceCreate], binding: graphql, confidence: high}
+- {tool: set_default_resource, category: resources, graphql: [platform.Mutation.resourceSetDefault], binding: graphql, confidence: high}
+- {tool: list_product_catalog, category: catalog, graphql: [platform.Query.productCatalog], binding: graphql, confidence: high}
+- {tool: get_product, category: catalog, graphql: [platform.Query.product], binding: graphql, confidence: high}
+- {tool: upload_workspace_file, category: files, graphql: [sdk.Mutation.workspaceUploadFile, platform.Mutation.uploadWorkspaceFile], binding: graphql, confidence: medium, note: 'Two names for the same flow across sdk and platform; both return a signed URL for an out-of-band PUT.'}
+- {tool: list_billing_transactions, category: billing, graphql: [platform.Workspace.billingTransactions], binding: graphql, confidence: high}
+- {tool: create_event_subscription, category: events, graphql: [platform.Mutation.eventSubscriptionCreate], binding: graphql, confidence: high}
+- {tool: list_event_subscriptions, category: events, graphql: [platform.Workspace.eventSubscriptions], binding: graphql, confidence: high}
+mcp_only: []
+rest_only: []
+graphql_only:
+- capability: user account lifecycle
+  surface: platform
+  fields: [userAccountCreate, userAccountUpdate, userAccountUpdateProfile, userAccountConfirmEmail, userAccountRequestEmailChange, userAccountVerifyEmailChange, userAccountReplaceAvatar, userAccountFlagUpdate, userAccountTerminate, userAccountRegisterProductInterest]
+  note: Portal-facing account management; intentionally not proposed as agent tools.
+- capability: workspace membership and invites
+  surface: platform
+  fields: [workspaceCreate, workspaceUpdate, workspaceDelete, workspaceReplaceAvatar, workspaceUpdateJobViewership, workspaceUpdateSpending, workspaceInviteSend, workspaceInviteAccept, workspaceInviteDecline, workspaceInviteCancel, workspaceInviteResend, workspaceMemberUpdateRole, workspaceMemberUpdateSpending, workspaceMemberRemove, workspaceMemberDisable, workspaceMemberLeave, workspaceMemberRegenerateAPIKey, workspaceMemberDeleteAPIKey]
+- capability: payment instrument and credit management
+  surface: platform
+  fields: [billingAccountStartCardSetup, billingAccountFinishCardSetup, billingAccountRemoveCard, billingAccountUpdateEmail, utilizeBillingCreditForPendingTransactions]
+  note: Card setup is a hosted flow; not a safe agent surface.
+- capability: product publishing
+  surface: platform
+  fields: [productCreate, productUpdate, productDelete, productRegenerateAPIKey, productAddWebLink, productRemoveWebLink, productImageDelete, uploadProductImage, webLinkCreate, webLinkUpdate]
+- capability: backend registration and job authoring (provider side)
+  surface: products
+  fields: [backendCreate, backendUpdate, backendDelete, backendAddTypes, backendRemoveTypes, jobCreate, jobUpdate, touchJob, jobUploadFile, billingTransactionCreate, resourceUpdateStatus, resourceStoreConfiguration, resourceResetConfiguration, requestBillingApproval]
+  note: >-
+    The products API is the PROVIDER side of the platform — it is how a compute product
+    writes job state back. A workspace API key does not reach it; it needs a product key.
+    This is the single largest surface divergence in the platform.
+surface_divergence:
+  - The sdk schema is a deliberate 3-query/4-mutation subset of platform, scoped to what an SDK user needs.
+  - The products schema is a different audience entirely (product/provider keys), not a subset of either.
+  - jobCreate exists ONLY on products; a workspace user creates jobs indirectly by calling a resource through the REST proxy.
+  - resourceCreate exists on BOTH platform and products with different inputs.
+  - The REST proxy is untyped and product-defined and therefore has no crosswalk row at all.
+coverage:
+  tools_named: 20
+  tools_bound: 20
+  tools_unbound: 0
+  mcp_only: 0
+  rest_ops_total: 0
+  graphql_fields_total: 100
+  graphql_fields_with_tool: 20
+  note: >-
+    graphql_fields_total counts queries + mutations across the three schemas
+    (3+4 sdk, 11+56 platform, 7+19 products = 100), including the fields duplicated
+    between schemas.

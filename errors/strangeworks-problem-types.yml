@@ -1,0 +1,62 @@
+generated: '2026-08-05'
+method: probed
+source: live probes of api.strangeworks.com + graphql/strangeworks-platform.graphql
+format: graphql-errors
+note: >-
+  Strangeworks publishes no error reference page and no OpenAPI, so there are no 4xx/5xx
+  response schemas to derive from. Everything below is either the GraphQL spec-mandated
+  error envelope, a status/body pair observed on a live anonymous probe on 2026-08-05,
+  or a failure state named in the live schema. Nothing is inferred. This is NOT RFC 9457 —
+  no application/problem+json is served anywhere on the surface.
+envelope:
+  graphql:
+    transport_status: 200
+    shape: '{"data": ..., "errors": [{"message": "...", "path": [...], "locations": [...]}]}'
+    note: >-
+      Standard GraphQL over HTTP. Failures are carried in `errors[]` at HTTP 200; the
+      Python SDK surfaces them as strangeworks_core.errors.error.StrangeworksError.
+  rest:
+    shape: '{"message": "...", "description": "..."}'
+    content_type: application/json
+    note: Used by the token endpoints and the resource REST proxy.
+problems:
+- status: 400
+  surface: POST https://api.strangeworks.com/users/token
+  message: key cannot be empty
+  meaning: The API key field was absent or empty in the token-exchange request body.
+  remediation: 'Send {"key": "<workspace api key>"} from the Strangeworks Portal home page.'
+  evidence: {probed: '2026-08-05', http_status: 400, body: '{"description":"","message":"key cannot be empty"}'}
+- status: 400
+  surface: POST https://api.strangeworks.com/product/token
+  message: key cannot be empty
+  meaning: The product API key field was absent or empty.
+  remediation: 'Send {"key": "<product api key>"}; rotate with the productRegenerateAPIKey mutation.'
+  evidence: {probed: '2026-08-05', http_status: 400, body: '{"description":"","message":"key cannot be empty"}'}
+- status: 404
+  surface: any unmapped path on https://api.strangeworks.com
+  meaning: No route. Returned as text/plain, not JSON.
+  remediation: Use one of /sdk, /platform, /products, /users/token, /product/token, or a resource proxy path.
+  evidence: {probed: '2026-08-05', http_status: 404, content_type: 'text/plain; charset=utf-8'}
+- status: 422
+  surface: GET on https://api.strangeworks.com/sdk | /platform | /products
+  meaning: >-
+    The GraphQL endpoints reject GET. They are POST-only; a GET returns 422
+    Unprocessable Entity rather than 405.
+  remediation: 'POST a JSON body of {"query": "..."} with Content-Type application/json.'
+  evidence: {probed: '2026-08-05', http_status: 422}
+failure_states:
+  note: >-
+    Not API errors, but the terminal failure values a caller must handle when polling a
+    job. Job.isTerminalState is the schema's own "this job is finished" flag.
+  JobStatus: [CREATED, QUEUED, RUNNING, COMPLETED, FAILED, CANCELLING, CANCELLED, ERROR]
+  terminal_failures: [FAILED, CANCELLED, ERROR]
+  remote_status: >-
+    Job.remoteStatus carries an opaque status string from the downstream compute provider
+    (IBM, Braket, D-Wave, Toshiba, …) and is not enumerated in the schema.
+  BackendStatus: [ONLINE, OFFLINE, MAINTENANCE, RETIRED, UNKNOWN]
+  ResourceStatus: [PENDING_ACTIVATION, ACTIVE, PENDING_DEACTIVATION, DEACTIVE]
+  BillingApprovalStatus: [PENDING, COMPLETE, CANCELLED]
+gaps:
+- No published error-code registry or error reference page.
+- No RFC 9457 problem+json.
+- No machine-readable error taxonomy; GraphQL `errors[].extensions` is not documented.

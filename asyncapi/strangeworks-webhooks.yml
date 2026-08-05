@@ -1,0 +1,74 @@
+generated: '2026-08-05'
+method: derived
+source: graphql/strangeworks-platform.graphql
+spec_type: Webhooks
+note: >-
+  Strangeworks publishes NO AsyncAPI document (probed /asyncapi.yaml and the docs host —
+  nothing) and no webhook documentation page. It does, however, ship a real, first-class
+  event-subscription surface in the platform GraphQL API: a workspace registers an HTTPS
+  endpoint against one EventType and the platform delivers to it. Everything below is
+  read verbatim out of the live schema — the event type list is the complete EventType
+  enum, not a guess. Payload shapes are NOT documented anywhere and are deliberately left
+  null rather than invented.
+surface:
+  kind: outbound-webhook
+  api: https://api.strangeworks.com/platform
+  managed_via: GraphQL mutations on the platform API
+  scope: per-workspace
+subscription_object:
+  type: EventSubscription
+  fields: [id, slug, name, eventType, endpoint, isDisabled, isDeleted, dateCreated, dateUpdated]
+  queries:
+  - {field: 'Workspace.eventSubscription(slug)', returns: EventSubscription}
+  - {field: 'Workspace.eventSubscriptions', returns: '[EventSubscription]'}
+  mutations:
+  - operation: eventSubscriptionCreate
+    input: EventSubscriptionCreateInput
+    input_fields: [workspaceSlug, name, eventType, endpoint]
+    output: EventSubscriptionCreateOutput
+  - operation: eventSubscriptionUpdate
+    input: EventSubscriptionUpdateInput
+    input_fields: [workspaceSlug, eventSubscriptionSlug, name, eventType, endpoint, isDisabled]
+    output: EventSubscriptionUpdateOutput
+  - operation: eventSubscriptionDelete
+    input: EventSubscriptionDeleteInput
+    input_fields: [workspaceSlug, eventSubscriptionSlug]
+  - operation: eventCreate
+    input: EventCreateInput
+    input_fields: [workspaceSlug, eventType, internalID, body]
+    note: >-
+      Publishes an event into the platform (body is a free-form JSON payload). Present on
+      the platform API mutation set.
+events:
+- type: JOB_COMPLETE
+  description: >-
+    Emitted when a Job reaches a terminal state. Payload schema is not published; the
+    Job object's terminal statuses are COMPLETED, FAILED, CANCELLED and ERROR, and
+    Job.isTerminalState is the schema's own terminal flag.
+  payload_schema: null
+- type: JOB_UPDATE
+  description: >-
+    Emitted on a Job state transition short of terminal (CREATED, QUEUED, RUNNING,
+    CANCELLING). Payload schema is not published.
+  payload_schema: null
+- type: REQ_RESP_HEADER
+  description: >-
+    Request/response header event. Its semantics are not documented anywhere in the
+    Strangeworks docs and are not inferable from the schema — recorded as present, not
+    explained.
+  payload_schema: null
+delivery:
+  endpoint: 'caller-supplied URL (EventSubscription.endpoint)'
+  disable: 'EventSubscription.isDisabled via eventSubscriptionUpdate'
+  signing: null
+  retry_policy: null
+  ordering: null
+  note: >-
+    No signing secret, retry policy, delivery-attempt log, replay mechanism or ordering
+    guarantee appears in the schema or the docs.
+gaps:
+- No AsyncAPI document.
+- No webhook documentation page in docs.strangeworks.com.
+- No payload schema for any of the three event types.
+- No webhook signature/verification mechanism exposed.
+- REQ_RESP_HEADER is undocumented.

@@ -1,0 +1,91 @@
+generated: '2026-08-05'
+method: derived
+source: graphql/*.graphql (live introspection) + https://strangeworks.com/robots.txt
+note: >-
+  Cross-cutting standards conformance. Derived from the live schemas and live probes.
+  Strangeworks publishes no compliance or certification page — trust.strangeworks.com and
+  strangeworks.com/security, /trust and /compliance were all probed and none exists — so
+  no Compliance or TrustCenter pointer is wired in apis.yml.
+standards:
+- id: graphql
+  conforms: true
+  evidence: >-
+    Three endpoints answer the GraphQL __schema introspection query with a spec-shaped
+    response over HTTP POST (200, 2026-08-05).
+- id: graphql-introspection
+  conforms: true
+  evidence: >-
+    Full introspection is enabled and anonymous on /sdk, /platform and /products. Note
+    this is normally disabled in production; see the observation in
+    authentication/strangeworks-authentication.yml.
+- id: relay-cursor-connections
+  conforms: true
+  evidence: >-
+    PaginationInput{first,after,last,before}; *Connection types with edges{node,cursor}
+    and pageInfo{hasNextPage,hasPreviousPage,startCursor,endCursor}.
+- id: rfc7519-jwt
+  conforms: true
+  evidence: >-
+    API keys are exchanged at /users/token and /product/token for a JWT bearer token;
+    the SDK depends on python-jose[cryptography] to handle it.
+- id: rfc6750-bearer
+  conforms: true
+  evidence: 'Authorization: Bearer <jwt> on every GraphQL and REST-proxy call.'
+- id: oauth2
+  conforms: false
+  evidence: No OAuth 2.0 authorization server, no /.well-known/oauth-authorization-server (404).
+- id: oidc
+  conforms: false
+  evidence: No /.well-known/openid-configuration on any host (404).
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI or Swagger document at any of /openapi.json, /openapi.yaml, /swagger.json,
+    /v1/openapi.json, /api-docs, /docs, /redoc on api.strangeworks.com (all 404) nor on
+    the docs host. The machine-readable contract here is GraphQL, not OpenAPI.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No AsyncAPI document published. An event surface does exist (EventSubscription /
+    EventType) and is captured in asyncapi/strangeworks-webhooks.yml.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No application/problem+json anywhere; errors use the GraphQL errors[] envelope.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on all four hosts.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support and no deprecation policy published.
+- id: a2a-agent-card
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json return 404 on all four hosts.
+- id: llmstxt
+  conforms: true
+  evidence: 'https://strangeworks.com/llms.txt returns 200 text/plain, 20,099 bytes, valid llms.txt structure.'
+- id: content-signals
+  conforms: true
+  evidence: >-
+    robots.txt carries 'Content-Signal: search=yes, ai-input=yes, ai-train=no'
+    (contentsignals.org), alongside explicit Allow rules for 16 named AI crawlers.
+- id: hsts
+  conforms: partial
+  evidence: >-
+    strangeworks.com (max-age 63072000) and docs.strangeworks.com (31556952) send HSTS;
+    api.strangeworks.com does not. See security/strangeworks-domain-security.yml.
+- id: dnssec
+  conforms: false
+  evidence: strangeworks.com is not DNSSEC-signed and publishes no CAA records.
+- id: dmarc
+  conforms: partial
+  evidence: SPF and DMARC published, but DMARC policy is p=none (monitor only).
+compliance_program:
+  published: false
+  certifications: []
+  detail: >-
+    No SOC 2, ISO 27001, HIPAA, PCI DSS, FedRAMP or GDPR statement was found on any
+    public page. probe-security-programs.py returned vdp=none trust=none.
+  probed:
+  - {url: 'https://trust.strangeworks.com/', status: 307, note: catch-all redirect, not a trust center}
+  - {url: 'https://strangeworks.com/security', status: 404}
+  - {url: 'https://strangeworks.com/trust', status: 404}

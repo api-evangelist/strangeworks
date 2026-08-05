@@ -1,18 +1,94 @@
 aid: strangeworks
 name: Strangeworks
-description: 'Strangeworks is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Strangeworks is an Austin, Texas based optimization and quantum computing
+  company founded in 2018 by whurley (William Hurley). It operates a "heterogeneous
+  hybrid compute" platform that gives enterprises and governments managed access to
+  quantum processors, quantum-inspired annealers and classical optimization solvers
+  from a single API and Python SDK, alongside its Compute, Workflows, Decisions and
+  HybridSolver products and an expert services practice. The platform is organized
+  around workspaces, products, resources, jobs and backends, and is programmable through
+  three public GraphQL endpoints (sdk, platform, products) at api.strangeworks.com
+  plus a REST proxy that forwards calls to an activated resource. Compute partners
+  reachable through the platform include IBM Quantum, Amazon Braket, Azure Quantum,
+  IonQ, Rigetti, Quantinuum, QuEra, IQM, AQT, Pasqal, D-Wave, Toshiba, Hitachi, Fujitsu,
+  NEC, Gurobi, JIJ, LightSolver and Quantagonia (acquired 2025).'
+image: https://strangeworks.com/og-image.png
 url: https://raw.githubusercontent.com/api-evangelist/strangeworks/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-05'
 modified: '2026-08-05'
 tags:
 - Company
-apis: []
+- Quantum Computing
+- Optimization
+- High Performance Computing
+- Artificial Intelligence
+- Developer Platform
+- GraphQL
+- Compute
+- Scientific Computing
+- Operations Research
+apis:
+- aid: strangeworks:sdk
+  name: Strangeworks SDK GraphQL API
+  description: The GraphQL API the Strangeworks Python SDK is built on. Exposes the
+    workspace a user's API key belongs to, the compute backends available to it, and
+    mutations for uploading workspace files, initiating and finalizing batch jobs,
+    and tagging jobs. Authenticated with a JWT bearer token exchanged from a workspace
+    API key at POST /users/token.
+  humanURL: https://docs.strangeworks.com/strangeworks-python
+  baseURL: https://api.strangeworks.com/sdk
+  tags:
+  - GraphQL
+  - Quantum Computing
+  - Jobs
+  - Workspaces
+  properties:
+  - type: GraphQL
+    url: graphql/strangeworks-sdk.graphql
+  - type: Documentation
+    url: https://docs.strangeworks.com/strangeworks-python
+- aid: strangeworks:platform
+  name: Strangeworks Platform GraphQL API
+  description: The full Strangeworks platform GraphQL API covering user accounts, workspaces
+    and members, invitations, billing accounts, credits and transactions, products
+    and the product catalog, resources, jobs, files, web links and event subscriptions
+    (webhooks). 11 queries and 56 mutations.
+  humanURL: https://docs.strangeworks.com/welcome/how-it-works
+  baseURL: https://api.strangeworks.com/platform
+  tags:
+  - GraphQL
+  - Workspaces
+  - Billing
+  - Jobs
+  - Webhooks
+  properties:
+  - type: GraphQL
+    url: graphql/strangeworks-platform.graphql
+  - type: Webhooks
+    url: asyncapi/strangeworks-webhooks.yml
+  - type: Documentation
+    url: https://docs.strangeworks.com/welcome/how-it-works
+- aid: strangeworks:products
+  name: Strangeworks Products GraphQL API
+  description: The product-side GraphQL API used by compute products published on the
+    Strangeworks platform to register and update backends, create and update jobs,
+    upload job files, store resource configuration, and create billing transactions.
+    Authenticated with a product API key exchanged at POST /product/token.
+  humanURL: https://docs.strangeworks.com/welcome/how-it-works
+  baseURL: https://api.strangeworks.com/products
+  tags:
+  - GraphQL
+  - Backends
+  - Jobs
+  - Billing
+  properties:
+  - type: GraphQL
+    url: graphql/strangeworks-products.graphql
+  - type: Documentation
+    url: https://docs.strangeworks.com/welcome/how-it-works
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +96,59 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.hiive.com/securities/strangeworks-stock
+  url: https://strangeworks.com/
+- type: Documentation
+  url: https://docs.strangeworks.com/
+- type: GettingStarted
+  url: https://docs.strangeworks.com/welcome/get-started
+- type: DeveloperPortal
+  url: https://portal.strangeworks.com/
+- type: SignUp
+  url: https://portal.strangeworks.com/
+- type: Support
+  url: https://strangeworks.com/contact
+- type: TermsOfService
+  url: https://strangeworks.com/terms
+- type: PrivacyPolicy
+  url: https://strangeworks.com/privacy
+- type: GitHubOrganization
+  url: https://github.com/strangeworks
+- type: ChangeLog
+  url: changelog/strangeworks-changelog.yml
+- type: GraphQL
+  url: graphql/strangeworks-sdk.graphql
+- type: Packages
+  url: packages/strangeworks-packages.yml
+- type: SDKs
+  url: packages/strangeworks-packages.yml
+- type: LLMsTxt
+  url: llms/strangeworks-llms.txt
+- type: Authentication
+  url: authentication/strangeworks-authentication.yml
+- type: Conventions
+  url: conventions/strangeworks-conventions.yml
+- type: ErrorCatalog
+  url: errors/strangeworks-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/strangeworks-lifecycle.yml
+- type: Conformance
+  url: conformance/strangeworks-conformance.yml
+- type: DataModel
+  url: data-model/strangeworks-data-model.yml
+- type: Webhooks
+  url: asyncapi/strangeworks-webhooks.yml
+- type: MCPServer
+  url: mcp/strangeworks-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/strangeworks-tool-crosswalk.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DomainSecurity
+  url: security/strangeworks-domain-security.yml
+- type: ContentSignal
+  url: https://strangeworks.com/robots.txt
+x-enrichment:
+  date: '2026-08-05'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1

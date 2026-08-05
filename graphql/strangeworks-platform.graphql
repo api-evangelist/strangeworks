@@ -1,0 +1,1764 @@
+# generated: '2026-08-05'
+# method: probed
+# source: https://api.strangeworks.com/platform (anonymous GraphQL introspection, HTTP 200)
+# note: SDL rendered from the live __schema introspection response; Strangeworks does not
+#       publish an SDL file — this is the server's own schema, unmodified in content.
+"""Enumeration of statuses for types conforming to `Account`"""
+enum AccountStatus {
+  ACTIVE
+  LOCKED
+}
+
+enum BackendStatus {
+  ONLINE
+  OFFLINE
+  MAINTENANCE
+  RETIRED
+  UNKNOWN
+}
+
+enum BillingApprovalStatus {
+  PENDING
+  COMPLETE
+  CANCELLED
+}
+
+enum BillingTransactionOrderField {
+  RESOURCE_NAME
+  STATUS
+  DATE_CREATED
+  AMOUNT
+}
+
+"""Enumeration of possible `BillingTransaction` statuses"""
+enum BillingTransactionStatus {
+  PENDING
+  COMPLETE
+}
+
+"""Enumeration of possible `BillingTransaction` units"""
+enum BillingTransactionUnit {
+  USD
+  EUR
+  MILLISECOND
+}
+
+"""Enumeration of currency identifiers"""
+enum Currency {
+  USD
+  EUR
+}
+
+"""DefaultRenderMode is an enum of the different types render modes for web links"""
+enum DefaultRenderMode {
+  LINK
+  FULL
+  EMBED
+}
+
+"""Available value types for an event's type"""
+enum EventType {
+  JOB_COMPLETE
+  JOB_UPDATE
+  REQ_RESP_HEADER
+}
+
+enum FeedbackCategory {
+  BUG
+  FEATURE
+  SUPPORT
+  KUDOS
+  GENERAL
+}
+
+"""The possible values for the GroupBy statement of a job"""
+enum JobGroupBy {
+  PRODUCT
+}
+
+"""Properties by which jobs can be ordered"""
+enum JobOrderField {
+  DATE_COMPLETED
+  DATE_CREATED
+  PRODUCT
+  RESOURCE
+  STATUS
+}
+
+"""The possible system states for a `Job`"""
+enum JobStatus {
+  CREATED
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLING
+  CANCELLED
+  ERROR
+}
+
+"""Possible directions in which to order a list of items when provided an `orderBy` argument."""
+enum OrderDirection {
+  ASC
+  DESC
+}
+
+"""ProductImageType is an enum of the different types of a product image"""
+enum ProductImageType {
+  APP_ICON
+  APP_VERTICAL
+  APP_HORIZONTAL
+  LOGO_CENTER
+  LOGO_LEFT
+  LOGO_RIGHT
+  OTHER
+}
+
+"""ProductType is an enum of the different types of products"""
+enum ProductType {
+  MANAGED_APP
+  COMPUTE_PROVIDER
+  TOOL
+  ENTERPRISE
+  DEMO
+}
+
+"""ProductWebLinkType is an enum of the different types of a product web link"""
+enum ProductWebLinkType {
+  RELATED_LINK
+  APP_UI
+  OTHER
+}
+
+"""Available value types for a ResourceConfiguration"""
+enum ResourceConfigurationValueType {
+  BOOL
+  STRING
+  SECURE
+  INT
+  JSON
+  DATE
+  FLOAT
+}
+
+enum ResourceOrderField {
+  NAME
+  JOB_COUNT
+  DATE_CREATED
+  PRODUCT
+  STATUS
+}
+
+"""Available value types for a Resource's status"""
+enum ResourceStatus {
+  PENDING_ACTIVATION
+  ACTIVE
+  PENDING_DEACTIVATION
+  DEACTIVE
+}
+
+"""Enumeration of spending limit period options"""
+enum SpendingLimitPeriod {
+  MONTHLY
+  ALL_TIME
+}
+
+enum TemplateType {
+  JSON
+}
+
+"""Enumeration of possible `WorkspaceInvite` status"""
+enum WorkspaceInviteStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  FAILED
+}
+
+"""Enumeration of WorkspaceRole values"""
+enum WorkspaceRole {
+  MEMBER
+  ADMIN
+  OWNER
+}
+
+"""Available value types for a WorkspaceSetting"""
+enum WorkspaceSettingValueType {
+  BOOL
+  STRING
+  SECURE
+  INT
+  JSON
+  DATE
+  FLOAT
+}
+
+input BatchOptions {
+  MaxRetries: Int!
+  MaxDuration: Int!
+}
+
+input BillingAccountFinishCardSetupInput {
+  workspaceSlug: String!
+}
+
+input BillingAccountRemoveCardInput {
+  workspaceSlug: String!
+}
+
+input BillingAccountStartCardSetupInput {
+  workspaceSlug: String!
+}
+
+input BillingAccountUpdateEmailInput {
+  workspaceSlug: String!
+  email: String!
+}
+
+input BillingTransactionOrder {
+  direction: OrderDirection!
+  field: BillingTransactionOrderField!
+}
+
+input Container {
+  ImageURI: String!
+}
+
+"""A type for storing a date range"""
+input DateRangeInput {
+  start: BigInt!
+  end: BigInt!
+}
+
+input EventCreateInput {
+  workspaceSlug: String!
+  eventType: EventType!
+  internalID: String
+  body: JSON
+}
+
+input EventSubscriptionCreateInput {
+  workspaceSlug: String!
+  name: String!
+  eventType: EventType!
+  endpoint: String!
+}
+
+input EventSubscriptionDeleteInput {
+  workspaceSlug: String!
+  eventSubscriptionSlug: String!
+}
+
+input EventSubscriptionUpdateInput {
+  workspaceSlug: String!
+  eventSubscriptionSlug: String!
+  name: String
+  eventType: EventType
+  endpoint: String
+  isDisabled: Boolean
+}
+
+input FeedbackSubmitInput {
+  message: String!
+  category: FeedbackCategory!
+  categoryTitle: String!
+  workspaceSlug: String
+  pageUrl: String
+  userAgent: String
+  metadata: JSON
+}
+
+input FinalizeBatchJobCreateInput {
+  batchJobSlug: String!
+  machine: Machine!
+  machineAccelerator: MachineAccelerator
+  options: BatchOptions
+}
+
+"""InitiateBatchJobCreateInput
+This is the input to initiate a batch job create.
+Must specify one or the other: program | container"""
+input InitiateBatchJobCreateInput {
+  program: Program
+  container: Container
+  fileName: String!
+  contentType: String!
+  label: String
+  metaFileType: String
+  metaFileSize: Int
+  metaFileCreateDate: Time
+  metaFileModifiedDate: Time
+}
+
+input JobAddTagsInput {
+  workspaceSlug: String!
+  jobSlug: String!
+  tags: [String!]!
+}
+
+input JobDeleteInput {
+  workspaceSlug: String!
+  jobSlug: String!
+}
+
+"""Ordering options for jobs"""
+input JobOrder {
+  direction: OrderDirection!
+  field: JobOrderField!
+}
+
+input JobRemoveTagInput {
+  workspaceSlug: String!
+  jobSlug: String!
+  tag: String!
+}
+
+input Machine {
+  Type: String!
+  CPU: Int!
+  Memory: Int!
+}
+
+input MachineAccelerator {
+  Type: String!
+  Count: Int!
+}
+
+"""PaginationInput
+cursor based forward/backward pagination input"""
+input PaginationInput {
+  first: Int
+  after: ID
+  last: Int
+  before: ID
+}
+
+input ProductAddWebLinkInput {
+  productSlug: String!
+  webLinkSlug: String!
+  productWebLinkType: ProductWebLinkType! = OTHER
+  isResourceRequired: Boolean! = false
+  sortWeight: Int! = 0
+}
+
+input ProductCreateInput {
+  name: String!
+  productSlug: String
+  productType: ProductType!
+  workspaceSlug: String!
+  logoUrl: String
+  shortDescription: String
+  overview: String
+  apiRoute: String
+  areTermsRequired: Boolean
+  termsTitle: String
+  termsContent: String
+  termsDownloadUrl: String
+  documentationUrl: String
+  requiresBillingAccount: Boolean = False
+  activationFormSchema: JSON
+  activationFormUI: JSON
+  isPublic: Boolean = False
+  allowsMultipleResources: Boolean = False
+  requiresServiceActivation: Boolean = False
+  isActivationDisabled: Boolean = False
+}
+
+input ProductDeleteInput {
+  workspaceSlug: String!
+  productSlug: String!
+}
+
+input ProductImageDeleteInput {
+  productSlug: String!
+  imageSlug: String!
+}
+
+input ProductRegenerateAPIKeyInput {
+  workspaceSlug: String!
+  productSlug: String!
+}
+
+input ProductRemoveWebLinkInput {
+  productSlug: String!
+  webLinkSlug: String!
+}
+
+input ProductUpdateInput {
+  workspaceSlug: String!
+  productSlug: String!
+  name: String
+  productType: ProductType
+  logoUrl: String
+  shortDescription: String
+  overview: String
+  apiRoute: String
+  areTermsRequired: Boolean
+  termsTitle: String
+  termsContent: String
+  termsDownloadUrl: String
+  isDisabled: Boolean
+  documentationUrl: String
+  requiresBillingAccount: Boolean
+  activationFormSchema: JSON
+  activationFormUI: JSON
+  isPublic: Boolean
+  allowsMultipleResources: Boolean
+  requiresServiceActivation: Boolean
+  isActivationDisabled: Boolean
+}
+
+input Program {
+  EntryPoint: String!
+  Language: String!
+  LanguageVersion: String!
+}
+
+input ResourceCreateInput {
+  workspaceSlug: String!
+  product_slug: String!
+  name: String!
+  activationData: JSON
+  isTermsAccepted: Boolean!
+  isRestricted: Boolean = false
+}
+
+input ResourceDeleteInput {
+  workspaceSlug: String!
+  resourceSlug: String!
+}
+
+input ResourceOrder {
+  direction: OrderDirection!
+  field: ResourceOrderField!
+}
+
+input ResourceSetDefaultInput {
+  workspaceSlug: String!
+  productSlug: String!
+  resourceSlug: String!
+}
+
+input ResourceUpdateInput {
+  workspaceSlug: String!
+  resourceSlug: String!
+  name: String
+  apiRoute: String
+  isDisabled: Boolean
+  isRestricted: Boolean
+  status: ResourceStatus
+}
+
+input SchemaCreateInput {
+  name: String!
+  template: String!
+}
+
+input UploadProductImageInput {
+  productSlug: String!
+  imageFile: Upload!
+  imageType: ProductImageType!
+  isPublic: Boolean = false
+}
+
+input UploadWorkspaceFileInput {
+  workspaceSlug: String!
+  workspaceFile: Upload!
+}
+
+input UserAccountConfirmEmailInput {
+  userAccountId: String!
+  code: String!
+}
+
+input UserAccountCreateInput {
+  email: String!
+  firstName: String!
+  lastName: String
+  source: String
+  password: String!
+}
+
+input UserAccountFlagUpdateInput {
+  key: String!
+  value: Boolean!
+}
+
+input UserAccountRegisterProductInterestInput {
+  productSlug: String!
+  isInterested: Boolean!
+}
+
+input UserAccountReplaceAvatarInput {
+  avatar: Upload!
+}
+
+input UserAccountRequestEmailChangeInput {
+  newEmail: String!
+}
+
+input UserAccountUpdateInput {
+  firstName: String
+  lastName: String
+}
+
+input UserAccountUpdateProfileInput {
+  quantumInterest: String
+  industry: String
+  organization: String
+  roleOrTitle: String
+  quantumCodeExperience: String
+  howDidYouHear: String
+}
+
+input UserAccountVerifyEmailChangeInput {
+  userAccountId: String!
+  token: String!
+}
+
+input UtilizeBillingCreditForPendingTransactionsInput {
+  workspaceSlug: String!
+  creditID: String!
+  transactionIDList: [String!]!
+}
+
+input WebLinkCreateInput {
+  displayName: String!
+  description: String
+  url: String!
+  isEmbeddable: Boolean! = false
+  defaultRenderMode: DefaultRenderMode!
+  attributes: JSON
+}
+
+input WebLinkUpdateInput {
+  webLinkSlug: String!
+  displayName: String
+  description: String
+  url: String
+  isEmbeddable: Boolean
+  defaultRenderMode: DefaultRenderMode
+  attributes: JSON
+}
+
+input WorkspaceCreateInput {
+  name: String!
+  organization: String
+  avatar: Upload
+}
+
+input WorkspaceDeleteInput {
+  workspaceSlug: String!
+}
+
+input WorkspaceInviteAcceptInput {
+  workspaceInviteSlug: String!
+}
+
+input WorkspaceInviteCancelInput {
+  workspaceSlug: String!
+  workspaceInviteSlug: String!
+}
+
+input WorkspaceInviteDeclineInput {
+  workspaceInviteSlug: String!
+}
+
+input WorkspaceInviteInput {
+  email: String!
+  role: WorkspaceRole!
+}
+
+input WorkspaceInviteResendInput {
+  workspaceSlug: String!
+  workspaceInviteSlug: String!
+}
+
+input WorkspaceInviteSendInput {
+  workspaceSlug: String!
+  workspaceInvites: [WorkspaceInviteInput!]!
+}
+
+input WorkspaceMemberDeleteAPIKeyInput {
+  workspaceSlug: String!
+  workspaceMemberSlug: String!
+}
+
+input WorkspaceMemberDisableInput {
+  workspaceSlug: String!
+  workspaceMemberSlug: String!
+}
+
+input WorkspaceMemberLeaveInput {
+  workspaceSlug: String!
+}
+
+input WorkspaceMemberRegenerateAPIKeyInput {
+  workspaceSlug: String!
+  workspaceMemberSlug: String!
+}
+
+input WorkspaceMemberRemoveInput {
+  workspaceSlug: String!
+  workspaceMemberSlug: String!
+}
+
+input WorkspaceMemberUpdateRoleInput {
+  workspaceSlug: String!
+  workspaceMemberSlug: String!
+  role: WorkspaceRole!
+}
+
+input WorkspaceMemberUpdateSpendingInput {
+  workspaceSlug: String!
+  workspaceMemberSlug: String!
+  isEnabled: Boolean!
+  limit: Float!
+  period: SpendingLimitPeriod!
+  currency: Currency!
+}
+
+input WorkspaceReplaceAvatarInput {
+  workspaceSlug: String!
+  avatar: Upload!
+}
+
+input WorkspaceUpdateInput {
+  workspaceSlug: String!
+  name: String
+  organization: String
+}
+
+input WorkspaceUpdateJobViewershipInput {
+  workspaceSlug: String!
+  canMembersViewJobs: Boolean!
+}
+
+input WorkspaceUpdateSpendingInput {
+  workspaceSlug: String!
+  limit: Float!
+  period: SpendingLimitPeriod!
+  currency: Currency!
+  spendingLimitEnabled: Boolean!
+}
+
+"""Represents a user or service account"""
+interface Account {
+  name: String!
+  email: String!
+  status: AccountStatus!
+}
+
+"""Represents a `BackendTag` that has been applied to a `Backend`"""
+type AppliedBackendTag {
+  id: ID!
+  "The tag value"
+  tag: String!
+  "An optional display name for the tag (usually for formatting purposes)"
+  displayName: String
+  "A logical group for this tag. This can be useful to show a filter groups, etc."
+  tagGroup: String
+  "Specifies if the tag was created by the user or by the system"
+  isSystem: Boolean!
+}
+
+"""A tag applied to a `Job`"""
+type AppliedJobTag {
+  "A tag which can be applied to a `Job`"
+  tag: JobTag!
+  "Determines if the tag was added automatically by the system, or from a user"
+  isSystem: Boolean!
+  "The date/time when the tag was applied"
+  dateCreated: Time!
+}
+
+"""A compute resource backend/target for a `Product`."""
+type Backend {
+  id: ID!
+  "A Strangeworks unique slug/key for this backend."
+  slug: String!
+  "The associated `Product` that owns this backend."
+  product: Product!
+  "The name to be displayed for this backend."
+  name: String!
+  "The Strangeworks status of the backend"
+  status: BackendStatus!
+  "The unique identifier used by the remote provider to identify this backend."
+  remoteBackendId: String!
+  "A provider-specific status"
+  remoteStatus: String
+  "A json object representing backend detail from provider."
+  data: JSON
+  "optional url reference to a JsonSchema document"
+  dataSchema: String
+  "Time of the last remote status/data refresh"
+  dateRefreshed: Time
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "An array of `BackendTag` for this backend"
+  tags: [AppliedBackendTag!]!
+  "An array of `BackendRegistration` for which this backend conforms"
+  backendRegistrations: [BackendRegistration!]!
+}
+
+"""`BackendRegistration` represents the conformance of a `BackendType` by a `Backend`."""
+type BackendRegistration {
+  backendTypeId: String!
+  "The `BackendType` of this registration"
+  backendType: BackendType!
+  "Returns the `Backend`'s data for the given type"
+  data: JSON
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+"""A system-level type definition for which `Backend`s may register/conform."""
+type BackendType {
+  id: ID!
+  "A Strangeworks unique slug/key for this backend type."
+  slug: String!
+  "An optional display name for this type"
+  displayName: String
+  "An optional description for this type"
+  description: String
+  "A url reference to a JsonSchema document for which backends of this type must conform"
+  schemaURL: String
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+"""Represents a Workspace's billing account to which invoices may be issued"""
+type BillingAccount {
+  id: ID!
+  "The associated customer identifier in Stripe"
+  stripeCustomerId: String
+  "The last known balance in Stripe"
+  stripeBalance: Float!
+  "The unit of currency for the Stripe balance"
+  stripeBalanceUnit: Currency
+  "The date of most recent balance update from Stripe"
+  stripeBalanceDateUpdated: Time
+  "The calculated value of the stripeBalance minus the totalPendingAmount."
+  balance: Float!
+  "The total amount of pending billing transactions"
+  totalPendingAmount: Float!
+  "Specifies if the member has been soft-deleted"
+  isDeleted: Boolean!
+  "Indicates if this `BillingAccount` allows charges"
+  isDisabled: Boolean!
+  "Indicates if a charges are allowed that will knowingly surpass the balance"
+  allowNegativeBalance: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "The email associated with the billing account"
+  billingEmail: String
+  "Billing credits added to this account"
+  credits: [BillingCredit!]
+}
+
+type BillingAccountFinishCardSetupOutput {
+  billingAccount: BillingAccount!
+}
+
+type BillingAccountRemoveCardOutput {
+  billingAccount: BillingAccount!
+}
+
+type BillingAccountStartCardSetupOutput {
+  setupIntentClientSecret: String!
+}
+
+type BillingAccountUpdateEmailOutput {
+  billingAccount: BillingAccount!
+}
+
+"""represents a billing credit that can be utilized in favor of the blaance ofn a billing account"""
+type BillingCredit {
+  "ID of the billing credit"
+  id: ID!
+  "originalAmount of the billing credit in cents (2 decimal places)"
+  originalAmount: Float!
+  "remainingAmount of the billing credit in cents (2 decimal places)"
+  remainingAmount: Float!
+  "unit of the billing credit"
+  unit: BillingTransactionUnit!
+  "product slug related to the billing credit, can be null if credit belongs to resource or workspace"
+  product: Product
+  "resource associated with the billing credit, can be null if credit belongs to a product or workspace"
+  resource: Resource
+  "workspace slug of the workspace the credit this credit belongs to. not null. If product and resource are empty the credit can be used workspace wide"
+  workspaceSlug: String!
+  "expiration date of the credit, null if no expiration was set"
+  expirationDate: Time
+}
+
+"""Represents a transaction to be billed against a Resource"""
+type BillingTransaction {
+  id: ID!
+  "The `Resource` from whom the transaction derived"
+  resource: Resource!
+  "The associated Job"
+  job: Job
+  "The status of the billing transaction"
+  status: BillingTransactionStatus!
+  "A short (70 char max) line item description of the charge"
+  description: String!
+  "Additional detail about the transaction (max 255 chars)"
+  memo: String
+  "The total amount of the charge. Positive is a credit, negative is a deduction."
+  amount: Float!
+  "The currency unit of `amount`"
+  unit: BillingTransactionUnit!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "Usage Data"
+  usage_data: JSON
+}
+
+type BillingTransactionConnection {
+  edges: [BillingTransactionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type BillingTransactionEdge {
+  node: BillingTransaction
+  cursor: ID!
+}
+
+type CatalogItem {
+  id: ID!
+  "The associated `Product`"
+  product: Product!
+  "Indicates that the item should be highlighted in the catalog"
+  isFeatured: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "An array of (non-internal) CatalogTag items assigned to this CatalogItem"
+  tags: [CatalogTag!]!
+}
+
+"""A tag which can be applied to a `CatalogItem`"""
+type CatalogTag {
+  id: ID!
+  "The tag value"
+  tag: String!
+  "An optional display name for the tag (usually for formatting purposes)"
+  displayName: String
+  "A logical group for this tag. This can be useful to show a filter groups, etc."
+  tagGroup: String
+}
+
+"""Represents a data schema that can be accessed via the system"""
+type DataSchema {
+  id: ID!
+  name: String!
+  template: String!
+}
+
+"""Represents a subscription for a webhook"""
+type EventSubscription {
+  id: ID!
+  "A workspace-unique (alphanumeric + `_`) identifier"
+  slug: String!
+  "The name of the event subscription"
+  name: String!
+  "The event type of the event subscription"
+  eventType: EventType!
+  "The endpoint for the webhook associated with the event subscription"
+  endpoint: String!
+  "Indicates if the item is disabled"
+  isDisabled: Boolean!
+  "Indicates if the item is soft-deleted"
+  isDeleted: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+type EventSubscriptionCreateOutput {
+  eventSubscription: EventSubscription!
+}
+
+type EventSubscriptionUpdateOutput {
+  eventSubscription: EventSubscription!
+}
+
+type FeedbackSubmitOutput {
+  "Whether the feedback submission was successful"
+  success: Boolean!
+  "Reference ID for tracking the feedback"
+  referenceId: String
+}
+
+type File {
+  id: ID!
+  "A globally-unique autogenerated random short ID suitable for use in a url"
+  slug: String!
+  "An alternate display name for this file"
+  label: String
+  "File named (extracted from `filePath`)"
+  fileName: String!
+  "A full url to download the file. It may require authentication and authorization if not public."
+  url: String!
+  "The type of file, typically expressed as a file extension (json, jpg, csv, etc)"
+  metaFileType: String
+  "Date when the file was created"
+  metaDateCreated: Time
+  "Date when the file was last modified"
+  metaDateModified: Time
+  "File size in bytes"
+  metaSizeBytes: BigInt
+  "A path to a JSON schema to which this file conforms"
+  jsonSchema: String @deprecated
+  "The slug for a data schema to which the file data conforms"
+  dataSchemaSlug: String
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "The templates for the given file's data"
+  templates: [Template!]
+}
+
+type FinalizeBatchJobCreateOutput {
+  "batchJobSlug is the unique identifier for the batch job."
+  batchJobSlug: String!
+}
+
+"""A type for storing graph data"""
+type GraphData {
+  x: BigInt!
+  y: Int!
+}
+
+type InitiateBatchJobCreateOutput {
+  "batchJobSlug is the unique identifier for the batch job. this is what is expected back in the FinalizeBatchJobCreateInput to officially kick of the batch job."
+  batchJobSlug: String!
+  "signedURL is the url the platform expects the client to upload their file to."
+  signedURL: String!
+}
+
+"""A Job artifact created from a `Resource`"""
+type Job {
+  id: ID!
+  "A parent `Job` who spawned and owns this one. (If null, this job is a root-level job.)"
+  parentJob: Job
+  "All children `Jobs` that were spawned from this `Job`"
+  childJobs: [Job!]!
+  "A remote identifier for this `Job`. Typically from an external system."
+  externalIdentifier: String
+  "A workspace-unique (alphanumeric + `_`) identifier"
+  slug: String!
+  "The `Resource` from which this `Job` derived"
+  resource: Resource!
+  "The current status of the `Job`"
+  status: JobStatus!
+  "True if this job is terminal (Completed, Failed, Cancelled, etc"
+  isTerminalState: Boolean!
+  "A status returned by an external system, if applicable"
+  remoteStatus: String
+  "A path to a JSON schema to which `jobData` conforms"
+  jobDataSchema: String @deprecated
+  "The slug for a data schema to which `jobData` conforms"
+  dataSchemaSlug: String
+  "JSON object containing job information"
+  jobData: JSON @deprecated
+  "JSON object containing job information"
+  data: JSON
+  "Date the remote job was created, if available"
+  dateJobCreated: Time
+  "Date the remote job started, if available"
+  dateJobStarted: Time
+  "Date the remote job completed/failed, if available"
+  dateJobCompleted: Time
+  "Indicates if the account is soft-deleted"
+  isDeleted: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "Returns `File` information for each non-hidden associated job file. (Order is currently determined by the server based on custom rules.)"
+  files: [JobFile!]!
+  "The `WorkspaceMember` who triggered this `Job`"
+  workspaceMember: WorkspaceMember!
+  "A list of JobTag items associated with the job"
+  tags: [AppliedJobTag!]!
+  "The templates for the given file's data"
+  templates: [Template!]
+}
+
+type JobAddTagsOutput {
+  jobSlug: String!
+  tags: [AppliedJobTag!]!
+}
+
+type JobConnection {
+  edges: [JobEdge!]!
+  pageInfo: PageInfo!
+  jobStatusCounts: [JobStatusCount!]!
+  jobGraph: [JobGraph]
+}
+
+type JobEdge {
+  node: Job
+  cursor: ID!
+}
+
+"""Includes a `File` object as well as additional fields for use in the context of a `Job`"""
+type JobFile {
+  "The `File` object attached to this `Job`"
+  file: File!
+  "Indicates if this file is publicly accessible. By default files are only visible to those with access to the job."
+  isPublic: Boolean!
+  "Provides the sort order for this file in lists. Higher is displayed first."
+  sortWeight: Int!
+}
+
+type JobGraph {
+  group: String!
+  data: [GraphData]!
+}
+
+type JobRemoveTagOutput {
+  jobSlug: String!
+  tags: [AppliedJobTag!]!
+}
+
+type JobStatusCount {
+  status: JobStatus!
+  count: Int!
+}
+
+"""A tag which can be applied to a `Job`"""
+type JobTag {
+  id: ID!
+  "The tag value"
+  tag: String!
+  "An optional display name for the tag (usually for formatting purposes)"
+  displayName: String
+  "A logical group for this tag. This can be useful to show a filter groups, etc."
+  tagGroup: String
+}
+
+type Mutation {
+  "Finalizes a credit card setup intent making the `BillingAccount` active."
+  billingAccountFinishCardSetup(input: BillingAccountFinishCardSetupInput!): BillingAccountFinishCardSetupOutput
+  "Disables the default `BillingAccount`. Fails if the account has a positive balance."
+  billingAccountRemoveCard(input: BillingAccountRemoveCardInput!): BillingAccountRemoveCardOutput
+  "Initiates a credit card setup intent, creating a `BillingAccount` if needed."
+  billingAccountStartCardSetup(input: BillingAccountStartCardSetupInput!): BillingAccountStartCardSetupOutput
+  "Updates a billing account's email address"
+  billingAccountUpdateEmail(input: BillingAccountUpdateEmailInput!): BillingAccountUpdateEmailOutput
+  "Creates an event"
+  eventCreate(input: EventCreateInput!): Boolean!
+  "Creates an eventSubscription"
+  eventSubscriptionCreate(input: EventSubscriptionCreateInput!): EventSubscriptionCreateOutput
+  "Updates an eventSubscription"
+  eventSubscriptionUpdate(input: EventSubscriptionUpdateInput!): EventSubscriptionUpdateOutput
+  "Deletes an eventSubscription"
+  eventSubscriptionDelete(input: EventSubscriptionDeleteInput!): Boolean!
+  "Submits user feedback"
+  feedbackSubmit(input: FeedbackSubmitInput!): FeedbackSubmitOutput!
+  "Adds one or more `JobTag` to a `Job`."
+  jobAddTags(input: JobAddTagsInput!): JobAddTagsOutput
+  "Deletes a `Job`."
+  jobDelete(input: JobDeleteInput!): Boolean!
+  "Removes a `JobTag` from a `Job`."
+  jobRemoveTag(input: JobRemoveTagInput!): JobRemoveTagOutput
+  "Adds a `WebLink` to a `Product`."
+  productAddWebLink(input: ProductAddWebLinkInput!): ProductAddWebLinkOutput
+  "Deletes a product image file and database records (this is not a soft delete)"
+  productImageDelete(input: ProductImageDeleteInput!): Boolean!
+  "Removes a `WebLink` from a `Product`."
+  productRemoveWebLink(input: ProductRemoveWebLinkInput!): Boolean!
+  "Creates a new product"
+  productCreate(input: ProductCreateInput!): ProductCreateOutput
+  "Soft deletes a product"
+  productDelete(input: ProductDeleteInput!): Boolean!
+  "Regenerates an API key for a product"
+  productRegenerateAPIKey(input: ProductRegenerateAPIKeyInput!): ProductRegenerateAPIKeyOutput
+  "Updates a product"
+  productUpdate(input: ProductUpdateInput!): ProductUpdateOutput
+  "Creates and activates a `Resource` from a `Product`."
+  resourceCreate(input: ResourceCreateInput!): ResourceCreateOutput
+  "Sets the isDefault flag for the given resource"
+  resourceSetDefault(input: ResourceSetDefaultInput!): ResourceSetDefaultOutput
+  "Updates a `Resource`."
+  resourceUpdate(input: ResourceUpdateInput!): ResourceUpdateOutput
+  "Deletes a `Resource` from a `Product`."
+  resourceDelete(input: ResourceDeleteInput!): Boolean!
+  "Confirms the email of a `UserAccount`."
+  userAccountConfirmEmail(input: UserAccountConfirmEmailInput!): Boolean!
+  "Creates a new `UserAccount`, typically as part of onboarding."
+  userAccountCreate(input: UserAccountCreateInput!): UserAccountCreateOutput
+  "Updates the boolean value of any editable `UserAccountFlag` for the current `UserAccount`."
+  userAccountFlagUpdate(input: UserAccountFlagUpdateInput!): UserAccountFlagUpdateOutput
+  "Registers `UserAccount` interst of a `Product` via a `UserAccountFlag` in the format of `product_interest_{productSlug}`. The flag is created when set to true, and removed when set to false. Return value indicates success/failure."
+  userAccountRegisterProductInterest(input: UserAccountRegisterProductInterestInput!): Boolean!
+  "Replaces the avatar of the current `UserAccount`."
+  userAccountReplaceAvatar(input: UserAccountReplaceAvatarInput!): UserAccountReplaceAvatarOutput
+  "Initiates an email change request for the current `UserAccount`."
+  userAccountRequestEmailChange(input: UserAccountRequestEmailChangeInput!): Boolean!
+  "Permanently deletes the current `UserAccount`, removing personal information and solely-owned data."
+  userAccountTerminate: Boolean!
+  "Updates field values of the current `UserAccount`."
+  userAccountUpdate(input: UserAccountUpdateInput!): UserAccountUpdateOutput
+  "Updates `UserAccount` profile information, typically as part of onboarding."
+  userAccountUpdateProfile(input: UserAccountUpdateProfileInput!): UserAccountUpdateProfileOutput
+  "Confirms an email change request for a `UserAccount`."
+  userAccountVerifyEmailChange(input: UserAccountVerifyEmailChangeInput!): Boolean!
+  "Creates a new `WebLink`."
+  webLinkCreate(input: WebLinkCreateInput!): WebLinkCreateOutput
+  "Updates an existing new `WebLink`."
+  webLinkUpdate(input: WebLinkUpdateInput!): WebLinkUpdateOutput
+  "Creates a new `Workspace`."
+  workspaceCreate(input: WorkspaceCreateInput!): WorkspaceCreateOutput
+  "Deletes a solely-owned `Workspace`."
+  workspaceDelete(input: WorkspaceDeleteInput!): Boolean!
+  "Temporarily suspends a `WorkspaceMember`."
+  workspaceMemberDisable(input: WorkspaceMemberDisableInput!): WorkspaceMemberDisableOutput
+  "Replaces the avatar of a `Workspace`."
+  workspaceReplaceAvatar(input: WorkspaceReplaceAvatarInput!): WorkspaceReplaceAvatarOutput
+  "Updates field values of a `Workspace`."
+  workspaceUpdate(input: WorkspaceUpdateInput!): WorkspaceUpdateOutput
+  "Specifies if `WorkspaceMember`s may view all `Job`s in the `Workspace` by default."
+  workspaceUpdateJobViewership(input: WorkspaceUpdateJobViewershipInput!): WorkspaceUpdateJobViewershipOutput
+  "Adjusts the overall `Workspace` spending limit."
+  workspaceUpdateSpending(input: WorkspaceUpdateSpendingInput!): WorkspaceUpdateSpendingOutput
+  "Accepts a pending `WorkspaceInvite` for the current `UserAccount`."
+  workspaceInviteAccept(input: WorkspaceInviteAcceptInput!): WorkspaceInviteAcceptOutput
+  "Revokes a pending `WorkspaceInvite`."
+  workspaceInviteCancel(input: WorkspaceInviteCancelInput!): Boolean!
+  "Declines a pending `WorkspaceInvite` for the current `UserAccount`."
+  workspaceInviteDecline(input: WorkspaceInviteDeclineInput!): Boolean!
+  "Re-sends an email for an existing `WorkspaceInvite`."
+  workspaceInviteResend(input: WorkspaceInviteResendInput!): WorkspaceInviteResendOutput
+  "Creates and sends one or more `WorkspaceInvite`s to specified email addresses."
+  workspaceInviteSend(input: WorkspaceInviteSendInput!): WorkspaceInviteSendOutput
+  "Deletes the current API key for a `WorkspaceMember`."
+  workspaceMemberDeleteAPIKey(input: WorkspaceMemberDeleteAPIKeyInput!): Boolean!
+  "Removes the current `UserAccount` from the specified `Workspace`."
+  workspaceMemberLeave(input: WorkspaceMemberLeaveInput!): Boolean!
+  "Regenerates the API key for a `WorkspaceMember`."
+  workspaceMemberRegenerateAPIKey(input: WorkspaceMemberRegenerateAPIKeyInput!): WorkspaceMemberRegenerateAPIKeyOutput
+  "Removes a `WorkspaceMember` from a `Workspace`."
+  workspaceMemberRemove(input: WorkspaceMemberRemoveInput!): Boolean!
+  "Updates the roles of a `WorkspaceMember`."
+  workspaceMemberUpdateRole(input: WorkspaceMemberUpdateRoleInput!): WorkspaceMemberUpdateRoleOutput
+  "Adjusts the spending limit for a `WorkspaceMember`. The overall `Workspace` limit supersedes this limit."
+  workspaceMemberUpdateSpending(input: WorkspaceMemberUpdateSpendingInput!): WorkspaceMemberUpdateSpendingOutput
+  "Allows for an image to be uploaded to be later displayed on a product."
+  uploadProductImage(input: UploadProductImageInput!): UploadProductImageOutput
+  "Allows a user to upload a file to their workspace. This file can be utilized by products that have access."
+  uploadWorkspaceFile(input: UploadWorkspaceFileInput!): UploadWorkspaceFileOutput
+  "Utilize new billing credits (added after transactions) for existing pending transactions.  Allows a workspace admin to apply credits created after existing transactions have been created and are set to pending  to allow them to cover pending balances with credits."
+  utilizeBillingCreditForPendingTransactions(input: UtilizeBillingCreditForPendingTransactionsInput!): Boolean!
+}
+
+"""PageInfo 
+As described by https://relay.dev/graphql/connections.htm#sec-undefined.PageInfo"""
+type PageInfo {
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  startCursor: ID!
+  endCursor: ID!
+}
+
+"""Represents a product or service offered through the platform"""
+type Product {
+  id: ID!
+  "A globally-unique (alphanumeric + `_`) product identifier"
+  slug: String!
+  "Display name"
+  name: String!
+  "Description of the Product's type"
+  productType: ProductType!
+  "An `https://` url pointing to an image suitable for representing product listing"
+  logoUrl: String
+  "A short (max 255 chars) description describing the product"
+  shortDescription: String
+  "Detailed markdown overview content to be shown on the product homepage"
+  overview: String
+  "An `https://` url pointing to the product's documentation"
+  documentationUrl: String
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "A list of images associated with the product"
+  images: [ProductImage!]
+  "Get a list of `Backend`s for this `Product`"
+  backends: [Backend!]!
+  "The Workspace who published this `Product`"
+  owner: Workspace!
+  "If true, the product will should not offer an activation option (perhaps 'Contact Us' instead)"
+  isActivationDisabled: Boolean!
+  "If true, and if `isActivationDisabled` is true, the portal will allow users to toggle product interest flag"
+  isInterestCheck: Boolean!
+  "If true, termsContent should be populated (at minimum), and the user must agree to terms before activation."
+  areTermsRequired: Boolean!
+  "Optional title of terms ie: 'IBM Quantum End User Agreement' If null, use a default generic title."
+  termsTitle: String
+  "Markdown content to be displayed in the terms of condition"
+  termsContent: String
+  "URL to the full terms document (optional)"
+  termsDownloadUrl: String
+  "Form schema JSON for `react-jsonschema-form`"
+  activationFormSchema: JSON
+  "UI schema JSON for `react-jsonschema-form`"
+  activationFormUI: JSON
+  "If true, the product can not be activated or used without a billing account"
+  requiresBillingAccount: Boolean!
+  "A list of CatalogTag items associated with a public CatalogItem associated to this Product."
+  tags: [CatalogTag!]!
+  "A list of Product Web Links"
+  webLinks: [ProductWebLink!]!
+  "The API Route of a product, only returned to the admin of the workspace that owns the product"
+  apiRoute: String
+  "The API Key of a product, only returned to the admin of the workspace that owns the product"
+  apiKey: String
+  "Denotes whether or not a product should be publicly accessible"
+  isPublic: Boolean!
+  "Denotes whether or not the product has been disabled"
+  isDisabled: Boolean
+  "Denotes whether or not the product is allowed to have multiple resources"
+  allowsMultipleResources: Boolean
+  "denotes whether or not the product requires service activation"
+  requiresServiceActivation: Boolean
+}
+
+type ProductAddWebLinkOutput {
+  webLink: WebLink!
+}
+
+type ProductCreateOutput {
+  product: Product!
+}
+
+"""The `ProductImage` for a `Product`"""
+type ProductImage {
+  "The type of the product image"
+  type: ProductImageType!
+  "Denotes whether or not the image should be publicly visible"
+  isPublic: Boolean!
+  "The file details for the image file"
+  imageFile: File!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+type ProductRegenerateAPIKeyOutput {
+  product: Product!
+}
+
+type ProductUpdateOutput {
+  product: Product!
+}
+
+"""The `ProductWebLink` for a `Product`"""
+type ProductWebLink {
+  "The type of the product web link"
+  type: ProductWebLinkType!
+  "The sort weight of the product web link. Higher values are sorted first"
+  sortWeight: Int!
+  "If true, this link expects to receive a resource_slug as a querystring parameter"
+  isResourceRequired: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "The web link for the product"
+  webLink: WebLink!
+}
+
+type Query {
+  "The current authenticated `UserAccount` or `ServiceAccount`"
+  viewer: Account!
+  "Get a `Backend` by slug"
+  backend(slug: String!): Backend
+  "Get a list of provider Backends"
+  backends(productSlugs: [String!], productTypes: [String!], backendTypeSlugs: [String!], backendStatuses: [BackendStatus!], backendTags: [String!]): [Backend!]!
+  "`Product` detail, must include a product slug, a workspace slug is required only if the product is private"
+  product(productSlug: String!, workspaceSlug: String): Product
+  "A list of product CatalogItems a user may browse"
+  productCatalog(tags: [String!], isFeatured: Boolean): [CatalogItem!]!
+  "A `ProductImage` for the given product_slug and image_slug"
+  productImage(productSlug: String!, workspaceSlug: String!, imageSlug: String!): ProductImage!
+  "A `ProductWebLink` for the given product_slug and weblink_slug"
+  productWebLink(productSlug: String!, workspaceSlug: String!, webLinkSlug: String!): ProductWebLink!
+  "workspaceInvitePreview is a public query that allows anyone to view public details about a workspace invite."
+  workspaceInvitePreview(slug: String!): WorkspaceInvitePreview!
+  "`WebLink` detail, must include a web link slug"
+  webLink(webLinkSlug: String!): WebLink!
+  "A list of Workspaces that the viewer can access"
+  workspaces: [Workspace!]!
+  "Find Workspace by workspace slug"
+  workspace(slug: String!): Workspace
+}
+
+"""Represents a Workspace-owned instance of a `Product`"""
+type Resource {
+  id: ID!
+  "A workspace-unique (alphanumeric + `_`) identifier"
+  slug: String!
+  "The Product this Resource instantiates"
+  product: Product!
+  "The current status of the Resource as set by the Product/Service"
+  status: ResourceStatus!
+  "Indicates if the item is soft-deleted"
+  isDeleted: Boolean!
+  "Denotes whether or not this a default resource for the given product"
+  isDefault: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "Display name for Resource"
+  name: String!
+  "Signifies if WorkspaceMembers are by default blocked from this Resource. If so, members can be granted entitlements to override"
+  isRestricted: Boolean!
+  "A setting by the resource-owner. When True, any attempt to call the resource should be rejected."
+  isDisabled: Boolean!
+  "BillingTransactions created on this Resource"
+  billingTransactions: [BillingTransaction!]!
+}
+
+"""A Key/Value Resource Configuration"""
+type ResourceConfiguration {
+  key: String!
+  "This value determines which value key contains the one true value for the key"
+  type: ResourceConfigurationValueType!
+  valueBool: Boolean
+  valueString: String
+  valueSecure: String
+  valueInt: Int
+  valueJson: String
+  valueDate: Time
+  valueFloat: Float
+  "Specifies if the `Resource` owner may edit this configuration value"
+  isEditable: Boolean!
+}
+
+type ResourceConnection {
+  edges: [ResourceEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ResourceCreateOutput {
+  resource: Resource!
+}
+
+type ResourceEdge {
+  node: Resource
+  cursor: ID!
+}
+
+type ResourceSetDefaultOutput {
+  resource: Resource!
+}
+
+type ResourceUpdateOutput {
+  resource: Resource!
+}
+
+"""`ServiceAccount` represents a workspace-owned non-user account typically used for machine-to-machine integration."""
+type ServiceAccount implements Account {
+  id: ID!
+  "A globally-unique autogenerated random short ID suitable for use in a url"
+  slug: String!
+  "Display name of the `ServiceAccount`"
+  name: String!
+  "Represents the current state of the `ServiceAccount`"
+  status: AccountStatus!
+  "A unique auto-generated email address associated with the `ServiceAccount`"
+  email: String!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "Indicates if the account is soft-deleted"
+  isDeleted: Boolean!
+}
+
+type Template {
+  "The type of the template"
+  type: TemplateType!
+  "The content of the template"
+  content: String!
+}
+
+type UploadProductImageOutput {
+  imageFile: File
+}
+
+type UploadWorkspaceFileOutput {
+  workspaceFile: File
+}
+
+"""A system-level user account"""
+type UserAccount implements Account {
+  id: ID!
+  "A globally-unique autogenerated random short ID suitable for use in a url"
+  slug: String!
+  "The full name of the user, concatenated from prefix, first, last, and suffix"
+  name: String!
+  "The first name of the user"
+  firstName: String!
+  "The last name of the user"
+  lastName: String
+  "The email address associated with the user"
+  email: String!
+  "An `https://` url pointing to an image suitable for avatar display"
+  avatarUrl: String
+  "The referring source of the user during signup"
+  source: String
+  "Indicates if the user email address has been verified"
+  isEmailVerified: Boolean!
+  "The current state of the account"
+  status: AccountStatus!
+  "Indicates if the account is soft-deleted"
+  isDeleted: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "The user's UserProfile"
+  userProfile: UserProfile
+  "All of the user's (non-internal) user flags"
+  userFlags: [UserAccountFlag!]!
+  "All of the current user's workspace memberships"
+  workspaceMembers: [WorkspaceMember!]!
+}
+
+type UserAccountCreateOutput {
+  userAccount: UserAccount!
+}
+
+"""`UserAccountFlag` represents a derived flag using a user's overridden value, or the default value."""
+type UserAccountFlag {
+  "a unique identifier (alphanumeric + `_`)"
+  key: String!
+  "The current (derived) value. If not overridden, this will reflect the global default value."
+  value: Boolean!
+  "The global default value for this key"
+  defaultValue: Boolean
+  "Indicates if the user is allowed to change the value of this flag directly"
+  isEditable: Boolean!
+  "Indicates if the value was replaced for the user, or if it used the default value"
+  isOverridden: Boolean!
+  "A description of this key's purpose"
+  description: String
+  "Specifies if this value should be returned to the user"
+  isInternal: Boolean!
+  "Date this key was overridden (if `isOverridden` is true), else when the default was created"
+  dateCreated: Time!
+  "Date this record was last updated"
+  dateUpdated: Time!
+}
+
+type UserAccountFlagUpdateOutput {
+  userAccountFlag: UserAccountFlag!
+}
+
+type UserAccountReplaceAvatarOutput {
+  userAccount: UserAccount!
+}
+
+type UserAccountUpdateOutput {
+  userAccount: UserAccount!
+}
+
+type UserAccountUpdateProfileOutput {
+  userProfile: UserProfile!
+}
+
+"""UserProfile contains profile information for a `UserAccount`, usually collected during initial onboarding."""
+type UserProfile {
+  id: ID!
+  "Answer to 'What is your interest in quantum?'"
+  quantumInterest: String
+  "Answer to 'What industry are you in?'"
+  industry: String
+  "Answer to 'Name of Affiliated Organization'"
+  organization: String
+  "Answer to 'Your Role or Title at the organization'"
+  roleOrTitle: String
+  "Answer to 'How experienced are you with quantum code?'"
+  quantumCodeExperience: String
+  "Answer to 'Where did you hear about our Strangeworks?'"
+  howDidYouHear: String
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+"""Represents a web link"""
+type WebLink {
+  id: ID!
+  "A globally-unique (alphanumeric + `_`) product identifier"
+  slug: String!
+  "Display name"
+  displayName: String!
+  "Description of the web link"
+  description: String
+  "URL of the web link"
+  url: String!
+  "Denotes whether or not a link can be embedded"
+  isEmbeddable: Boolean
+  "The default render mode of the web link"
+  defaultRenderMode: DefaultRenderMode!
+  "A list of attributes specific to a web links default render mode"
+  attributes: JSON
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+type WebLinkCreateOutput {
+  webLink: WebLink!
+}
+
+type WebLinkUpdateOutput {
+  webLink: WebLink!
+}
+
+"""Workspaces are shared by members and own `Job`s and other shared resources"""
+type Workspace {
+  id: ID!
+  "A globally unique (alphanumeric + `_`) identifier"
+  slug: String!
+  "Display name of the `Workspace`"
+  name: String!
+  "The display name of the associated organization"
+  organization: String
+  "An `https://` url pointing to an image suitable for avatar display"
+  avatarUrl: String
+  "Specifies if the Workspace is currently in a disabled/locked state"
+  isDisabled: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "Grab a workspace file through the file slug"
+  file(slug: String!): WorkspaceFile!
+  files(pagination: PaginationInput): WorkspaceFileConnection!
+  "Fetches the default `BillingAccount` for a `Workspace`"
+  defaultBillingAccount: BillingAccount
+  "BillingTransactions associated with this `Workspace`"
+  billingTransactions(orderBy: BillingTransactionOrder = {field:DATE_CREATED,direction:DESC}, pagination: PaginationInput, status: BillingTransactionStatus): BillingTransactionConnection
+  "Fetches the EventSubscription for the specified slug"
+  eventSubscription(slug: String!): EventSubscription
+  "eventSubscriptions associated with this `Workspace`"
+  eventSubscriptions: [EventSubscription!]!
+  jobs(workspaceMemberSlug: String, orderBy: JobOrder = {field:DATE_CREATED,direction:DESC}, parentJobSlug: String, isChild: Boolean, resourceSlug: String, productSlug: String, tags: [String!], status: JobStatus, pagination: PaginationInput, dateRange: DateRangeInput, groupBy: JobGroupBy, q: String): JobConnection
+  "Returns a job given the slug"
+  job(jobSlug: String!): Job
+  "Fetches a filtered list of tags the user previously used"
+  suggestJobTags(q: String!, jobSlug: String): [JobTag!]!
+  "All resources in the Workspace"
+  resources(productSlug: String, productType: String, orderBy: ResourceOrder = {field:DATE_CREATED,direction:DESC}, pagination: PaginationInput): ResourceConnection
+  "Returns a Workspace Resource matching the slug"
+  resource(resourceSlug: String!): Resource
+  "Returns the default resource for the Product"
+  defaultResource(productSlug: String!): Resource
+  "The historical UserAccount which created the `Workspace`. (It is possible this user no longer has access to the Workspace.)"
+  createdBy: UserAccount!
+  "Returns true if the Workspace has an active billing account"
+  hasActiveBillingAccount: Boolean!
+  "A collection of Workspace settings"
+  workspaceSettings: [WorkspaceSetting!]!
+  "Products granted explicitly to this Workspace. These are typically non-public and/or unlisted products."
+  products: [Product!]!
+  "Products owned by the given workspace. Only visible to workspace admins and above."
+  ownedProducts: [Product!]!
+  "Find Workspace members for current workspace"
+  workspaceMembers(status: AccountStatus, role: WorkspaceRole, email: String): [WorkspaceMember!]!
+  "Find a WorkspaceMember in current Workspace"
+  workspaceMember(memberSlug: String!): WorkspaceMember
+  "Find WorkspaceInvites for the current workspace"
+  workspaceInvites: [WorkspaceInvite!]!
+  "The seat limit set for the workspace, if it exists"
+  seatLimit: Int
+  "Seats occupied by the workspace"
+  seatsOccupied: Int
+}
+
+type WorkspaceCreateOutput {
+  workspace: Workspace!
+}
+
+"""Includes a `File` object as well as additional fields for use in the context of a `Workspace`"""
+type WorkspaceFile {
+  "The `File` object attached to this `Workspace`"
+  file: File!
+}
+
+type WorkspaceFileConnection {
+  edges: [WorkspaceFileEdge!]!
+  pageInfo: PageInfo!
+}
+
+type WorkspaceFileEdge {
+  cursor: ID!
+  node: WorkspaceFile
+}
+
+"""WorkspaceInvite represents an invite to a Workspace"""
+type WorkspaceInvite {
+  id: ID!
+  "A globally-unique autogenerated random short ID suitable for use in a url"
+  slug: String!
+  "The `UserAccount` from whom the invite was sent"
+  sender: UserAccount!
+  "The current status of the invite"
+  status: WorkspaceInviteStatus!
+  "The email address of the invitee"
+  email: String!
+  "Specifies the role to be assigned to the invitee once accepted"
+  role: WorkspaceRole!
+  "The date and time when the invite was accepted or rejected by the invitee. If null, the invite has no response."
+  dateActioned: Time
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+}
+
+type WorkspaceInviteAcceptOutput {
+  workspaceInvite: WorkspaceInvite!
+}
+
+type WorkspaceInvitePreview {
+  dateCreated: Time!
+  workspaceAvatarUrl: String
+  workspaceInviteSlug: String!
+  workspaceName: String!
+  workspaceSlug: String!
+}
+
+type WorkspaceInviteResendOutput {
+  workspaceInvite: WorkspaceInvite!
+}
+
+type WorkspaceInviteSendOutput {
+  workspaceInvites: [WorkspaceInvite!]!
+}
+
+"""WorkspaceMember provides either a `UserAccount` or `ServiceAccount` membership into a `Workspace`."""
+type WorkspaceMember {
+  id: ID!
+  "A globally-unique autogenerated random short ID suitable for use in a url"
+  slug: String!
+  "The associated account (a global `UserAccount` or a Workspace's `ServiceAccount`)"
+  account: Account!
+  "The `Workspace` role assigned to the member"
+  role: WorkspaceRole!
+  "Specifies if the user's access to the `Workspace` is disabled"
+  isDisabled: Boolean!
+  "The API key for the member to interact with this `Workspace`"
+  apiKey: String
+  "Date and time of API key generation"
+  apiKeyTimestamp: Time
+  "Specifies if the member has a spending limit enabled"
+  spendingLimitEnabled: Boolean!
+  "The maximum amount of member spending allowed for the period"
+  spendingLimit: Float
+  "The currency of the `spendingLimit`"
+  spendingLimitCurrency: Currency
+  "The period for which the `spendingLimit` is applied"
+  spendingLimitPeriod: SpendingLimitPeriod
+  "Specifies if the member has been soft-deleted"
+  isDeleted: Boolean!
+  "Date and time of creation"
+  dateCreated: Time!
+  "Date and time of last update"
+  dateUpdated: Time!
+  "The `Workspace` for this membership"
+  workspace: Workspace!
+}
+
+type WorkspaceMemberDisableOutput {
+  workspaceMember: WorkspaceMember!
+}
+
+type WorkspaceMemberRegenerateAPIKeyOutput {
+  workspaceMember: WorkspaceMember!
+}
+
+type WorkspaceMemberUpdateRoleOutput {
+  workspaceMember: WorkspaceMember!
+}
+
+type WorkspaceMemberUpdateSpendingOutput {
+  workspaceMember: WorkspaceMember!
+}
+
+type WorkspaceReplaceAvatarOutput {
+  workspace: Workspace!
+}
+
+"""A Key/Value Workspace Setting"""
+type WorkspaceSetting {
+  key: String!
+  "This value determines which value key contains the one true value for the key"
+  type: WorkspaceSettingValueType!
+  valueBool: Boolean
+  valueString: String
+  valueSecure: String
+  valueInt: Int
+  valueJson: String
+  valueDate: Time
+  valueFloat: Float
+  isEditable: Boolean!
+}
+
+type WorkspaceUpdateJobViewershipOutput {
+  workspace: Workspace!
+}
+
+type WorkspaceUpdateOutput {
+  workspace: Workspace!
+}
+
+type WorkspaceUpdateSpendingOutput {
+  workspace: Workspace!
+}
+
+scalar BigInt
+
+"""The `Boolean` scalar type represents `true` or `false`."""
+
+"""The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point)."""
+
+"""The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as "4") or integer (such as 4) input value will be accepted as an ID."""
+
+"""The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1."""
+
+scalar JSON
+
+scalar Map
+
+"""The `String`scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text."""
+
+"""Time in RFC3339 format, as returned by Golang's [time.RFC3339Nano](https://pkg.go.dev/time#pkg-constants) format"""
+scalar Time
+
+"""The `UploadFile, // b.txt` scalar type represents a multipart file upload."""
+scalar Upload

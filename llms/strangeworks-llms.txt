@@ -1,0 +1,109 @@
+# Strangeworks
+
+> The most advanced compute network, managed by the industry's top experts.
+
+Strangeworks helps enterprises and governments solve complex optimization problems using quantum computing, quantum-inspired algorithms, and AI. The site documents our products, services, the industries we serve, and specific use cases with measurable business impact.
+
+## Products
+
+- [Products overview](https://strangeworks.com/products): All Strangeworks products
+- [Compute](https://strangeworks.com/products/compute): Managed access to quantum and classical compute resources from a single API
+- [Workflows](https://strangeworks.com/products/workflows): Production-ready optimization workflows for operators and planners
+- [Decisions](https://strangeworks.com/products/decisions): Real-time decision optimization at scale
+- [HybridSolver](https://strangeworks.com/products/hybridsolver): Hybrid quantum-classical optimization solver
+- [Heterogeneous Hybrid Compute](https://strangeworks.com/heterogeneous-hybrid-compute): Platform overview for heterogeneous hybrid compute
+- [Future of Advanced Compute](https://strangeworks.com/future-of-advanced-compute): How quantum, AI, and optimization converge to solve real problems
+
+## Services
+
+- [Experts](https://strangeworks.com/experts): Expert consulting in quantum, optimization, and AI
+- [Launchpad](https://strangeworks.com/launchpad): Fixed-scope, fixed-cost proof-of-concept program with a go/no-go recommendation
+- [Optimization](https://strangeworks.com/optimization): Optimization services for enterprise problems
+- [Quantum Computing](https://strangeworks.com/quantum-computing): Quantum computing services and consulting
+- [Government Advisory](https://strangeworks.com/government-advisory): Quantum and optimization advisory for government
+
+## Industries
+
+- [Industries overview](https://strangeworks.com/industries): All industries we serve
+- [Energy](https://strangeworks.com/industries/energy): Optimize generation, distribution, and the energy transition.
+- [Logistics](https://strangeworks.com/industries/logistics): Optimize routing, warehousing, and transportation networks.
+- [Defense](https://strangeworks.com/industries/defense): Mission-critical optimization for defense operations.
+- [Automotive](https://strangeworks.com/industries/automotive): Drive efficiency across automotive manufacturing and supply chains.
+- [Manufacturing](https://strangeworks.com/industries/manufacturing): Optimize production, supply chains, and factory operations.
+- [Aerospace](https://strangeworks.com/industries/aerospace): Optimize complex aerospace operations from design to delivery.
+- [Finance](https://strangeworks.com/industries/finance): Optimize portfolios, manage risk, and improve operations.
+- [Pharmaceutical](https://strangeworks.com/industries/pharmaceutical): Accelerate drug discovery and optimize pharmaceutical operations.
+
+## Use Cases
+
+- [Use cases overview](https://strangeworks.com/use-cases): Problems we solve, grouped by problem type
+- [Plan (problem type)](https://strangeworks.com/use-cases/plan): Build schedules and operating plans that use limited resources efficiently.
+- [Production Scheduling and Optimization](https://strangeworks.com/use-cases/plan/production-optimization): Optimize production scheduling to allocate limited manufacturing resources to competing tasks while minimizing completion time, costs, and meeting delivery deadlines in complex job shop environments.
+- [Power Generation Optimization](https://strangeworks.com/use-cases/plan/power-generation-optimization): Determine optimal generation dispatch across thermal, renewable, and storage assets while balancing costs, emissions, and reliability constraints in real-time across complex grid infrastructure.
+- [Clinical Trial and Manufacturing Scheduling](https://strangeworks.com/use-cases/plan/clinical-trial-scheduling): Create optimal timelines and resource allocations for clinical trials and pharmaceutical manufacturing under strict regulatory compliance.
+- [Maintenance Optimization](https://strangeworks.com/use-cases/plan/maintenance-optimization): Design optimal maintenance strategies balancing preventive, predictive, and corrective approaches while minimizing production disruption and ensuring equipment reliability.
+- [Production Line Balancing](https://strangeworks.com/use-cases/plan/production-line-balancing): Balance production line workloads and schedule manufacturing operations to maximize throughput, eliminate bottlenecks, and optimize resource utilization across complex workflows.
+- [Liquidity and Rebalancing Planning](https://strangeworks.com/use-cases/plan/liquidity-rebalancing): Optimize portfolio rebalancing strategies to maintain target allocations while managing transaction costs, liquidity constraints, and cash flow requirements.
+- [Dock Door and Labor Scheduling](https://strangeworks.com/use-cases/plan/dock-door-scheduling): Optimize dock door assignments and labor schedules to minimize truck wait times and maximize warehouse throughput while handling real-time disruptions.
+- [Supply Planning and Inventory Management](https://strangeworks.com/use-cases/plan/supply-planning-inventory): Optimize inventory levels and supply planning across multi-echelon networks to balance working capital, service levels, and demand uncertainty.
+- [Personnel Scheduling and Assignment](https://strangeworks.com/use-cases/plan/personnel-scheduling): Assign the right employees with the right skills to the right shifts at the right time, while balancing complex constraints including labor laws, employee preferences, demand forecasts, and cost optimization.
+- [Move (problem type)](https://strangeworks.com/use-cases/move): Optimize how things flow through networks—people, products, data, or vehicles.
+- [Last-Mile Delivery Routing](https://strangeworks.com/use-cases/move/last-mile-delivery-routing): Optimize daily delivery routes for last-mile operations, dynamically adjusting vehicle paths to minimize costs, meet time windows, and handle real-time constraints like traffic and new orders.
+- [Resupply and Distribution Optimization](https://strangeworks.com/use-cases/move/defense-resupply-optimization): Plan and optimize military supply flows through complex multi-modal networks while operating in contested environments vulnerable to interdiction.
+- [Inbound and Outbound Logistics Optimization](https://strangeworks.com/use-cases/move/automotive-inbound-outbound): Optimize vehicle routing, inventory management, and production sequencing for automotive logistics to reduce costs, improve delivery performance, and enhance manufacturing efficiency.
+- [Transportation Network Design](https://strangeworks.com/use-cases/move/transportation-network-design): Design strategic transportation networks including facility locations, lane selections, and mode choices to optimize long-term logistics costs, capacity, and service levels.
+- [Optimization of Public Transport Networks](https://strangeworks.com/use-cases/move/public-transport-optimization): Optimize public transit operations including vehicle scheduling, crew rostering, route planning, and timetabling to reduce costs, improve service quality, and support sustainable urban mobility.
+- [Grid Flow and Distribution Optimization](https://strangeworks.com/use-cases/move/grid-flow-optimization): Optimize power transmission and distribution through electrical grids and microgrids, coordinating generation dispatch, battery storage, and renewable resources to minimize costs and emissions while maintaining reliability.
+- [Choose (problem type)](https://strangeworks.com/use-cases/choose): Pick the best mix of decisions under tradeoffs (cost, performance, risk, constraints).
+- [Portfolio Management](https://strangeworks.com/use-cases/choose/portfolio-management): Optimize asset allocation to maximize risk-adjusted returns while satisfying regulatory constraints, ESG criteria, and transaction cost considerations in financial portfolios.
+- [Inventory Management and Stock Control](https://strangeworks.com/use-cases/choose/inventory-management): Determine optimal stocking levels for parts and materials across multi-echelon networks while balancing service levels against carrying costs, managing obsolescence risk, and adapting to demand variability.
+- [Defense Supply Chain and Resource Allocation](https://strangeworks.com/use-cases/choose/defense-supply-chain-allocation): Optimize multi-tier defense supply chains and tactical resource allocation across distributed operations, managing 200,000+ suppliers while maximizing readiness and minimizing costs in contested environments.
+- [Space Utilization and Layout Optimization](https://strangeworks.com/use-cases/choose/space-utilization): Optimize manufacturing facility layouts and warehouse space allocation to minimize material handling costs while maximizing productive floor area utilization.
+- [Energy Portfolio Optimization](https://strangeworks.com/use-cases/choose/energy-portfolio-optimization): Determine the optimal long-term mix of thermal, renewable, and storage assets to minimize cost while meeting reliability and emissions targets over 10-30 year planning horizons.
+- [Strategic Network Planning](https://strangeworks.com/use-cases/choose/strategic-network-planning): Optimize long-term infrastructure investments for energy transmission and distribution networks to support renewable integration, manage demand growth, and maintain reliability while minimizing capital expenditures.
+- [Predict (problem type)](https://strangeworks.com/use-cases/predict): Forecast outcomes and detect signals so decisions are informed (not guessed).
+- [Asset Failure and Readiness Prediction](https://strangeworks.com/use-cases/predict/asset-failure-prediction): Predict component failures in aircraft, vehicles, and military equipment to prevent catastrophic events, reduce maintenance costs, and maximize fleet readiness through predictive analytics and optimization.
+- [Strategic Planning and Forecasting](https://strangeworks.com/use-cases/predict/strategic-planning-forecasting): Generate accurate demand forecasts and develop long-term plans for pharmaceutical capacity, inventory, and network investments under uncertainty.
+- [Simulate (problem type)](https://strangeworks.com/use-cases/simulate): Run "what-if" scenarios to understand consequences before acting.
+- [Risk Management and Assessment](https://strangeworks.com/use-cases/simulate/risk-management-assessment): Systematically identify, quantify, and mitigate risks across aerospace/defense and pharmaceutical supply chains, R&D portfolios, and manufacturing operations.
+- [Adapt (problem type)](https://strangeworks.com/use-cases/adapt): Make better decisions repeatedly as the world changes in real time.
+- [Dynamic Pricing and Tariff Optimization](https://strangeworks.com/use-cases/adapt/dynamic-pricing-tariff): Design time-varying electricity prices that balance revenue maximization, demand shaping, renewable integration, and grid stability while encouraging efficient customer consumption patterns.
+- [Dynamic Pricing](https://strangeworks.com/use-cases/adapt/dynamic-pricing-logistics): Real-time price optimization for logistics services based on capacity, demand, and market conditions to maximize profitability under volatile costs.
+- [Peak Shaving and Demand Response](https://strangeworks.com/use-cases/adapt/peak-shaving): Peak shaving optimization reduces electricity costs by up to 30% through optimal battery storage scheduling that minimizes demand charges and shifts consumption from peak to off-peak periods.
+- [Energy Storage Management and Real-Time Optimization](https://strangeworks.com/use-cases/adapt/energy-storage-management): Optimize battery charging and discharging in real-time to maximize revenue while preserving battery lifespan.
+- [Real-Time Rerouting and Reprioritization](https://strangeworks.com/use-cases/adapt/real-time-rerouting): Enable delivery fleets to dynamically adjust routes in response to traffic, road closures, weather, and new demands, using real-time data streams, AI, and mathematical optimization to reduce costs and improve efficiency.
+- [Adaptive Trial Design and Supply Planning](https://strangeworks.com/use-cases/adapt/adaptive-trial-design): Continuously optimize clinical trials and supply plans as enrollment and efficacy data accumulates, reducing waste and accelerating drug development.
+- [Validate (problem type)](https://strangeworks.com/use-cases/validate): Answer "can this work at all?" and find a viable plan that meets requirements.
+- [Mission and Flight Plan Validation](https://strangeworks.com/use-cases/validate/mission-plan-validation): Mission plan validation for aerospace and defense operations uses optimization to verify feasibility, safety, and performance of complex missions, achieving 20× faster planning with quantum-inspired methods.
+
+## Company
+
+- [About Strangeworks](https://strangeworks.com/about): Company story and mission
+- [Team](https://strangeworks.com/team): The team building Strangeworks
+- [Careers](https://strangeworks.com/careers): Open roles
+- [Contact](https://strangeworks.com/contact): Get in touch with sales or about a project
+
+## Optional
+
+- [Press releases](https://strangeworks.com/press): All Strangeworks press releases and announcements
+- [Nauticus Robotics, Inc. and Strangeworks Collaborate on AI-Optimized Deployment of Undersea Fiber-Optic Sensing Networks (2026-08-04)](https://strangeworks.com/press/nauticus-robotics-inc-and-strangeworks-collaborate-on-ai-optimized-deployment-of-undersea-fiber-optic-sensing-networks): Collaboration explores how AI-driven mission planning and autonomous subsea systems can improve the deployment of distributed underwater sensing infrastructure.
+- [Strangeworks Named to Inaugural All-World Defense 300, the First Data-Driven Ranking of the Private Companies Underwriting Allied Defense (2026-07-30)](https://strangeworks.com/press/strangeworks-named-to-inaugural-all-world-defense-300-the-first-data-driven-ranking-of-the-private-companies-underwriting-allied-defense): Selection by Future Union is scored on verified government contracts, not fundraising. Strangeworks is recognized in the Spark tier of Sensing, Spectrum & Advanced Compute.
+- [Strangeworks Issues Press Release Because They Had An Expiring PR Credit (2026-07-21)](https://strangeworks.com/press/strangeworks-issues-press-release-because-they-had-an-expiring-pr-credit): Also, unveils Strangeworks Aura™. It’s real, effective, and probably a better use of everyone’s time.
+- [Strangeworks and Tech Mahindra Sign MOU to Accelerate Quantum and Quantum-Inspired Solutions for Global Enterprises (2025-11-28)](https://strangeworks.com/press/strangeworks-and-tech-mahindra-sign-mou-to-accelerate-quantum-and-quantum-inspired-solutions-for-global-enterprises): A global partnership to fast-track enterprise adoption of quantum and quantum-inspired optimization across high-impact industries.
+- [Strangeworks Acquires Quantagonia to Create Global Leader in Applied AI, Optimization, and Quantum Computing (2025-08-20)](https://strangeworks.com/press/strangeworks-acquires-quantagonia-to-create-global-leader-in-applied-ai-optimization-and-quantum-computing): Acquisition brings together applied artificial intelligence, agnostic solver orchestration, high performance (HPC) and quantum computing to address businesses' most complex challenges faster, smarter, and more intuitively than ever before.
+- [Backstage Pass](https://strangeworks.com/backstage): Programs for users and contributors
+- [Quantum Hardware Credit Encore Program](https://strangeworks.com/backstage/again): Back by popular demand and better than ever, Strangeworks is again working with our Quantum Syndicate member Amazon Braket to help Backstage Pass members push available QPUs to the limits of possibility. We will award a limited number of tickets for use starting in Q2 2023, so be sure to get your applications in early. With more providers and options for testing your personal or team research projects on quantum hardware, this is a perfect opportunity to see what quantum can do today.
+- [BosonQ PSI VIP Program](https://strangeworks.com/backstage/changes): Strangeworks is working with our Quantum Syndicate member BosonQ Psi (BQP) to help bring Backstage Pass members access to the world's first Quantum-powered engineering simulation software, BQPhy™.
+- [Wolfram Mathematica Program](https://strangeworks.com/backstage/epic): The first ten qualified applicants will get free access to the Strangeworks platform and receive $500 in credits for use on select solvers, including IBM, AWS Braket, Rigetti, Hitachi, Gurobi, and more. Applicants must already have access to Wolfram Mathematica.
+- [Quantum Hardware Credit Program](https://strangeworks.com/backstage/freebird): Strangeworks is working with our Quantum Syndicate member Amazon Braket to help Backstage Pass members push available hardware to the limits of what is possible with QPUs today.
+- [Stagehand Contributor Program](https://strangeworks.com/backstage/imagine): Strangeworks is looking for individuals and teams interested in developing and hosting quantum applications on the Strangeworks platform. By becoming a member of our Stagehand Contributor Program, you will get support integrating your application with the Strangeworks platform, where it will be accessible by users across the quantum ecosystem.
+- [CMOS Annealing Service](https://strangeworks.com/backstage/koko): Access Hitachi’s newest, most performant CMOS annealing machines from the Strangeworks platform for processing combinatorial optimization problems. CMOS annealing machines are non-Neumann architecture computers using dedicated combinatorial optimization processing technology developed by Hitachi to optimize the Ising model.
+- [Quandela Cloud Program](https://strangeworks.com/backstage/lights): Strangeworks is working with our Quantum Syndicate member Quandela to give Backstage Pass members early access to Quandela’s exciting photonic quantum processors designed for various applications, including machine learning, material design, and optimization.
+- [Hilbert Space](https://strangeworks.com/backstage/respect): Strangeworks is working with our Quantum Syndicate member ColdQuanta to help bring Backstage Pass members early access to ColdQuanta’s exciting new Hilbert quantum computer designed for applications including quantum chemistry, optimization, logistics and machine learning.
+- [Strangeworks Beta Program.](https://strangeworks.com/backstage/stairway): Get immediate access to pre-release features and functionality before anyone else in the industry. Test-drive new tools and help shape the future of quantum computing technology.
+- [Rigetti Credits + QML](https://strangeworks.com/backstage/starman): Strangeworks is working with our Quantum Syndicate member Rigetti to help bring Backstage Pass members on-demand access to its superconducting quantum processors and quantum machine learning applications.
+- [NEC Vector Annealing  Service Program](https://strangeworks.com/backstage/superstition): Strangeworks is working with our Quantum Syndicate member NEC to give Backstage Pass members special access to NEC’s Vector Annealing Service for solving large-scale combinatorial problems at ultra-high speed using quantum-inspired computing technology.
+- [Research Group Program](https://strangeworks.com/backstage/umbrella): Accelerate your organization’s research pipeline with free access to the Strangeworks Enterprise licenses. The Strangeworks Research Program is designed for universities, government research groups, and national labs pursuing research in various verticals that require multiple users and hardware resources.
+- [Syndicate](https://strangeworks.com/syndicate): The Strangeworks Syndicate program
+- [Outreach](https://strangeworks.com/outreach): Speaking, thought leadership, and education
+- [Team directory](https://strangeworks.com/team): 23 team members with individual profile pages at /team/[slug]

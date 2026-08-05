@@ -42,5 +42,10 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Strangeworks is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.hiive.com/securities/strangeworks-stock
+Strangeworks is an Austin, Texas based optimization and quantum computing company founded in 2018 by whurley (William Hurley). It operates a "heterogeneous hybrid compute" platform that gives enterprises and governments managed access to quantum processors, quantum-inspired annealers and classical optimization solvers from a single API and Python SDK.
+
+The machine-readable contract here is **GraphQL, not OpenAPI** — three endpoints at `api.strangeworks.com` (`/sdk`, `/platform`, `/products`), captured under `graphql/` from the live schemas, plus an untyped REST proxy that forwards calls to an activated resource.
+
+- Website: https://strangeworks.com/
+- Documentation: https://docs.strangeworks.com/
+- Developer portal: https://portal.strangeworks.com/
