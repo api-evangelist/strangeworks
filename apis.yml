@@ -43,6 +43,11 @@ apis:
   tags:
   - GraphQL
   - Quantum Computing
+  - Job
+  - Workspaces
+  tags_raw:
+  - GraphQL
+  - Quantum Computing
   - Jobs
   - Workspaces
   properties:
@@ -59,6 +64,12 @@ apis:
   humanURL: https://docs.strangeworks.com/welcome/how-it-works
   baseURL: https://api.strangeworks.com/platform
   tags:
+  - GraphQL
+  - Workspaces
+  - Billing
+  - Job
+  - Webhook
+  tags_raw:
   - GraphQL
   - Workspaces
   - Billing
@@ -80,6 +91,11 @@ apis:
   humanURL: https://docs.strangeworks.com/welcome/how-it-works
   baseURL: https://api.strangeworks.com/products
   tags:
+  - GraphQL
+  - Backend
+  - Job
+  - Billing
+  tags_raw:
   - GraphQL
   - Backends
   - Jobs
