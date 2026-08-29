@@ -12,6 +12,17 @@ description: 'Strangeworks is an Austin, Texas based optimization and quantum co
   reachable through the platform include IBM Quantum, Amazon Braket, Azure Quantum,
   IonQ, Rigetti, Quantinuum, QuEra, IQM, AQT, Pasqal, D-Wave, Toshiba, Hitachi, Fujitsu,
   NEC, Gurobi, JIJ, LightSolver and Quantagonia (acquired 2025).'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://strangeworks.com/og-image.png
 url: https://raw.githubusercontent.com/api-evangelist/strangeworks/refs/heads/main/apis.yml
 x-type: company
