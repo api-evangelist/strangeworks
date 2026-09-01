@@ -103,7 +103,7 @@ apis:
   baseURL: https://api.strangeworks.com/products
   tags:
   - GraphQL
-  - Backends
+  - Backend
   - Job
   - Billing
   tags_raw:
