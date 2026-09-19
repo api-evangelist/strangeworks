@@ -68,7 +68,7 @@ apis:
   - GraphQL
   - Quantum Computing
   - Job
-  - Workspaces
+  - Workspace
   tags_raw:
   - GraphQL
   - Quantum Computing
@@ -89,7 +89,7 @@ apis:
   baseURL: https://api.strangeworks.com/platform
   tags:
   - GraphQL
-  - Workspaces
+  - Workspace
   - Billing
   - Job
   - Webhook
