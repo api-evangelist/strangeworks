@@ -1,0 +1,16 @@
+generated: '2026-10-20'
+method: none
+source:
+- https://zapier.com/apps/strangeworks/integrations
+- https://n8n.io/integrations/strangeworks/
+- https://composio.dev/toolkits/strangeworks
+- https://monid.ai/tools/strangeworks
+checked:
+- https://composio.dev/toolkits/strangeworks
+- https://monid.ai/tools/strangeworks
+- https://n8n.io/integrations/strangeworks/
+- https://zapier.com/apps/strangeworks/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []

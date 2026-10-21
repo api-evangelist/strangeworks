@@ -1,0 +1,96 @@
+generated: '2026-10-20'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 5
+  own: 4
+  other_domain: 0
+  platform: 1
+  roles:
+  - api
+  - docs
+  - portal
+  - source
+  - website
+hosts:
+- host: api.strangeworks.com
+  found_by:
+  - apis[]
+  - probed
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: strangeworks.com
+  role: api
+  relation: own
+- host: docs.strangeworks.com
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - docs-index
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Documentation
+  - GettingStarted
+  serves:
+  - docs
+  - cdn
+  - documentation
+  vendor: cloudflare
+  registrable_domain: strangeworks.com
+  role: docs
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: portal.strangeworks.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - docs-index
+  - contract-discovery
+  - well-known
+  types:
+  - DeveloperPortal
+  - SignUp
+  serves:
+  - docs
+  registrable_domain: strangeworks.com
+  role: portal
+  relation: own
+- host: strangeworks.com
+  found_by:
+  - pointer
+  - probed
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Newsroom
+  - Leadership
+  - Blog
+  - Website
+  - Support
+  - TermsOfService
+  - PrivacyPolicy
+  - ContentSignal
+  serves:
+  - hosting
+  vendor: vercel
+  registrable_domain: strangeworks.com
+  role: website
+  relation: own

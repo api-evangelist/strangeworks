@@ -1,5 +1,6 @@
 ---
-name: Submit a compute job to a Strangeworks resource and poll it to completion
+name: strangeworks-submit-and-poll-job
+title: Submit a compute job to a Strangeworks resource and poll it to completion
 description: >-
   Authenticate with a workspace API key, find an ACTIVE resource, submit work to it
   through the resource REST proxy, then poll the job with the platform GraphQL API until

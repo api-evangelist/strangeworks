@@ -1,5 +1,7 @@
 aid: strangeworks
+
 name: Strangeworks
+
 description: 'Strangeworks is an Austin, Texas based optimization and quantum computing
   company founded in 2018 by whurley (William Hurley). It operates a "heterogeneous
   hybrid compute" platform that gives enterprises and governments managed access to
@@ -12,6 +14,7 @@ description: 'Strangeworks is an Austin, Texas based optimization and quantum co
   reachable through the platform include IBM Quantum, Amazon Braket, Azure Quantum,
   IonQ, Rigetti, Quantinuum, QuEra, IQM, AQT, Pasqal, D-Wave, Toshiba, Hitachi, Fujitsu,
   NEC, Gurobi, JIJ, LightSolver and Quantagonia (acquired 2025).'
+
 deliveryModel:
   model: saas
   open_source: false
@@ -23,6 +26,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: unknown
@@ -36,13 +40,21 @@ accessModel:
   - security
   generated: '2026-09-03'
   method: derived
+
 image: https://strangeworks.com/og-image.png
+
 url: https://raw.githubusercontent.com/api-evangelist/strangeworks/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:secondary-market
+
 specificationVersion: '0.23'
+
 created: '2026-08-05'
+
 modified: '2026-10-06'
+
 tags:
 - Company
 - Quantum Computing
@@ -54,6 +66,76 @@ tags:
 - Compute
 - Scientific Computing
 - Operations Research
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+
+common:
+- type: Deprecation
+  url: lifecycle/strangeworks-lifecycle.yml
+- type: Hosts
+  url: hosts/strangeworks-hosts.yml
+- type: Vendors
+  url: vendors/strangeworks-vendors.yml
+- type: Newsroom
+  url: https://strangeworks.com/press
+- type: Leadership
+  url: https://strangeworks.com/team
+- url: https://strangeworks.com/press
+  type: Blog
+- type: Website
+  url: https://strangeworks.com/
+- type: Documentation
+  url: https://docs.strangeworks.com/
+- type: GettingStarted
+  url: https://docs.strangeworks.com/welcome/get-started
+- type: DeveloperPortal
+  url: https://portal.strangeworks.com/
+- type: SignUp
+  url: https://portal.strangeworks.com/
+- type: Support
+  url: https://strangeworks.com/contact
+- type: TermsOfService
+  url: https://strangeworks.com/terms
+- type: PrivacyPolicy
+  url: https://strangeworks.com/privacy
+- type: GitHubOrganization
+  url: https://github.com/strangeworks
+- type: ChangeLog
+  url: changelog/strangeworks-changelog.yml
+- type: GraphQL
+  url: graphql/strangeworks-sdk.graphql
+- type: Packages
+  url: packages/strangeworks-packages.yml
+- type: SDKs
+  url: packages/strangeworks-packages.yml
+- type: LLMsTxt
+  url: llms/strangeworks-llms.txt
+- type: Authentication
+  url: authentication/strangeworks-authentication.yml
+- type: Conventions
+  url: conventions/strangeworks-conventions.yml
+- type: Lifecycle
+  url: lifecycle/strangeworks-lifecycle.yml
+- type: Conformance
+  url: conformance/strangeworks-conformance.yml
+- type: DataModel
+  url: data-model/strangeworks-data-model.yml
+- type: Webhooks
+  url: asyncapi/strangeworks-webhooks.yml
+- type: X-MCPServerCandidate
+  url: mcp/strangeworks-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DomainSecurity
+  url: security/strangeworks-domain-security.yml
+- type: ContentSignal
+  url: https://strangeworks.com/robots.txt
+
 apis:
 - aid: strangeworks:sdk
   name: Strangeworks SDK GraphQL API
@@ -129,69 +211,9 @@ apis:
     url: graphql/strangeworks-products.graphql
   - type: Documentation
     url: https://docs.strangeworks.com/welcome/how-it-works
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
-- FN: APIs.json
-  email: info@apis.io
-common:
-- url: https://strangeworks.com/press
-  type: Blog
-- type: Website
-  url: https://strangeworks.com/
-- type: Documentation
-  url: https://docs.strangeworks.com/
-- type: GettingStarted
-  url: https://docs.strangeworks.com/welcome/get-started
-- type: DeveloperPortal
-  url: https://portal.strangeworks.com/
-- type: SignUp
-  url: https://portal.strangeworks.com/
-- type: Support
-  url: https://strangeworks.com/contact
-- type: TermsOfService
-  url: https://strangeworks.com/terms
-- type: PrivacyPolicy
-  url: https://strangeworks.com/privacy
-- type: GitHubOrganization
-  url: https://github.com/strangeworks
-- type: ChangeLog
-  url: changelog/strangeworks-changelog.yml
-- type: GraphQL
-  url: graphql/strangeworks-sdk.graphql
-- type: Packages
-  url: packages/strangeworks-packages.yml
-- type: SDKs
-  url: packages/strangeworks-packages.yml
-- type: LLMsTxt
-  url: llms/strangeworks-llms.txt
-- type: Authentication
-  url: authentication/strangeworks-authentication.yml
-- type: Conventions
-  url: conventions/strangeworks-conventions.yml
-- type: ErrorCatalog
-  url: errors/strangeworks-problem-types.yml
-- type: Lifecycle
-  url: lifecycle/strangeworks-lifecycle.yml
-- type: Conformance
-  url: conformance/strangeworks-conformance.yml
-- type: DataModel
-  url: data-model/strangeworks-data-model.yml
-- type: Webhooks
-  url: asyncapi/strangeworks-webhooks.yml
-- type: X-MCPServerCandidate
-  url: mcp/strangeworks-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
-- type: ToolCrosswalk
-  url: mcp/strangeworks-tool-crosswalk.yml
-- type: AgentSkill
-  url: skills/_index.yml
-- type: DomainSecurity
-  url: security/strangeworks-domain-security.yml
-- type: ContentSignal
-  url: https://strangeworks.com/robots.txt
+
 x-enrichment:
-  date: '2026-08-05'
+  date: '2026-10-20'
   status: enriched
-  artifacts_added: 21
-  pass: local-v1
+  artifacts_added: 3
+  pass: local-v5

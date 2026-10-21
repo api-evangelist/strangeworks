@@ -1,0 +1,14 @@
+name: Strangeworks pricing
+generated: '2026-10-20'
+method: none
+audience: unclear
+pricing_basis: none
+published: false
+plan_count: 0
+plans: []
+delivery:
+  model: managed
+note: No public pricing page; https://strangeworks.com/pricing returned 404 on 2026-10-20 and the docs index (83 pages) has no pricing or billing page. Access is via portal.strangeworks.com sign-up / contact sales.
+checked:
+- url: https://strangeworks.com/pricing
+  status: 404

@@ -1,149 +1,252 @@
 generated: '2026-08-05'
 method: derived
 source: graphql/strangeworks-platform.graphql
-note: >-
-  Entity-relationship graph derived mechanically from the live Strangeworks platform
-  GraphQL schema by walking each OBJECT type's fields and recording every field whose
-  named type is another OBJECT. `via` is the GraphQL field name. Relay *Connection
-  wrappers are collapsed to their node type. Nothing here is inferred beyond the schema.
+note: Entity-relationship graph derived mechanically from the live Strangeworks platform GraphQL schema
+  by walking each OBJECT type's fields and recording every field whose named type is another OBJECT. `via`
+  is the GraphQL field name. Relay *Connection wrappers are collapsed to their node type. Nothing here
+  is inferred beyond the schema.
 identity:
   primary_key: 'id: ID! (opaque)'
   natural_key: 'slug: String! — "a workspace-unique (alphanumeric + `_`) identifier"'
-  addressing: >-
-    Slugs are the addressing unit across the API and the REST proxy path
-    (/products/{product_slug}/resource/{resource_slug}/{path}). There are no typed
-    id prefixes.
+  addressing: Slugs are the addressing unit across the API and the REST proxy path (/products/{product_slug}/resource/{resource_slug}/{path}).
+    There are no typed id prefixes.
 root:
   entity: Workspace
-  detail: >-
-    Workspace is the tenancy root. Jobs, resources, files, members, invites, settings,
-    billing transactions and event subscriptions all hang off it, and "data is never
-    shared between workspaces" per the platform docs.
+  detail: Workspace is the tenancy root. Jobs, resources, files, members, invites, settings, billing transactions
+    and event subscriptions all hang off it, and "data is never shared between workspaces" per the platform
+    docs.
 entities:
 - name: Workspace
   domain: tenancy
   description: Personal or team environment; the tenancy and billing boundary.
   relationships:
-  - {type: has_many, entity: WorkspaceMember, via: workspaceMembers}
-  - {type: has_many, entity: WorkspaceInvite, via: workspaceInvites}
-  - {type: has_many, entity: WorkspaceSetting, via: workspaceSettings}
-  - {type: has_many, entity: WorkspaceFile, via: files}
-  - {type: has_many, entity: Job, via: jobs}
-  - {type: has_many, entity: Resource, via: resources}
-  - {type: has_many, entity: Product, via: products}
-  - {type: has_many, entity: Product, via: ownedProducts}
-  - {type: has_many, entity: EventSubscription, via: eventSubscriptions}
-  - {type: has_many, entity: BillingTransaction, via: billingTransactions}
-  - {type: has_one, entity: BillingAccount, via: defaultBillingAccount}
-  - {type: has_one, entity: Resource, via: defaultResource}
-  - {type: has_one, entity: UserAccount, via: createdBy}
+  - type: has_many
+    entity: WorkspaceMember
+    via: workspaceMembers
+  - type: has_many
+    entity: WorkspaceInvite
+    via: workspaceInvites
+  - type: has_many
+    entity: WorkspaceSetting
+    via: workspaceSettings
+  - type: has_many
+    entity: WorkspaceFile
+    via: files
+  - type: has_many
+    entity: Job
+    via: jobs
+  - type: has_many
+    entity: Resource
+    via: resources
+  - type: has_many
+    entity: Product
+    via: products
+  - type: has_many
+    entity: Product
+    via: ownedProducts
+  - type: has_many
+    entity: EventSubscription
+    via: eventSubscriptions
+  - type: has_many
+    entity: BillingTransaction
+    via: billingTransactions
+  - type: has_one
+    entity: BillingAccount
+    via: defaultBillingAccount
+  - type: has_one
+    entity: Resource
+    via: defaultResource
+  - type: has_one
+    entity: UserAccount
+    via: createdBy
 - name: UserAccount
   domain: identity
   relationships:
-  - {type: has_one, entity: UserProfile, via: userProfile}
-  - {type: has_many, entity: UserAccountFlag, via: userFlags}
-  - {type: has_many, entity: WorkspaceMember, via: workspaceMembers}
-  enums: {status: 'AccountStatus [ACTIVE, LOCKED]'}
+  - type: has_one
+    entity: UserProfile
+    via: userProfile
+  - type: has_many
+    entity: UserAccountFlag
+    via: userFlags
+  - type: has_many
+    entity: WorkspaceMember
+    via: workspaceMembers
+  enums:
+    status: AccountStatus [ACTIVE, LOCKED]
 - name: WorkspaceMember
   domain: identity
-  description: The join entity between a UserAccount and a Workspace; carries the role, the API key and the spending limit.
+  description: The join entity between a UserAccount and a Workspace; carries the role, the API key and
+    the spending limit.
   relationships:
-  - {type: belongs_to, entity: Workspace, via: workspace}
-  enums: {role: 'WorkspaceRole [MEMBER, ADMIN, OWNER]'}
+  - type: belongs_to
+    entity: Workspace
+    via: workspace
+  enums:
+    role: WorkspaceRole [MEMBER, ADMIN, OWNER]
 - name: WorkspaceInvite
   domain: identity
   relationships:
-  - {type: has_one, entity: UserAccount, via: sender}
-  enums: {status: WorkspaceInviteStatus}
+  - type: has_one
+    entity: UserAccount
+    via: sender
+  enums:
+    status: WorkspaceInviteStatus
 - name: Product
   domain: catalog
-  description: An application published on the platform (managed app, compute provider, tool, enterprise or demo).
+  description: An application published on the platform (managed app, compute provider, tool, enterprise
+    or demo).
   relationships:
-  - {type: belongs_to, entity: Workspace, via: owner}
-  - {type: has_many, entity: Backend, via: backends}
-  - {type: has_many, entity: ProductImage, via: images}
-  - {type: has_many, entity: ProductWebLink, via: webLinks}
-  - {type: has_many, entity: CatalogTag, via: tags}
-  enums: {type: 'ProductType [MANAGED_APP, COMPUTE_PROVIDER, TOOL, ENTERPRISE, DEMO]'}
+  - type: belongs_to
+    entity: Workspace
+    via: owner
+  - type: has_many
+    entity: Backend
+    via: backends
+  - type: has_many
+    entity: ProductImage
+    via: images
+  - type: has_many
+    entity: ProductWebLink
+    via: webLinks
+  - type: has_many
+    entity: CatalogTag
+    via: tags
+  enums:
+    type: ProductType [MANAGED_APP, COMPUTE_PROVIDER, TOOL, ENTERPRISE, DEMO]
 - name: CatalogItem
   domain: catalog
   description: A Product's listing in the public product catalog.
   relationships:
-  - {type: has_one, entity: Product, via: product}
-  - {type: has_many, entity: CatalogTag, via: tags}
+  - type: has_one
+    entity: Product
+    via: product
+  - type: has_many
+    entity: CatalogTag
+    via: tags
 - name: Resource
   domain: execution
   description: An activated instance of a Product inside a Workspace. Jobs are always submitted to a Resource.
   relationships:
-  - {type: belongs_to, entity: Product, via: product}
-  - {type: has_many, entity: BillingTransaction, via: billingTransactions}
-  - {type: has_many, entity: ResourceConfiguration, via: configuration}
-  enums: {status: 'ResourceStatus [PENDING_ACTIVATION, ACTIVE, PENDING_DEACTIVATION, DEACTIVE]'}
+  - type: belongs_to
+    entity: Product
+    via: product
+  - type: has_many
+    entity: BillingTransaction
+    via: billingTransactions
+  - type: has_many
+    entity: ResourceConfiguration
+    via: configuration
+  enums:
+    status: ResourceStatus [PENDING_ACTIVATION, ACTIVE, PENDING_DEACTIVATION, DEACTIVE]
 - name: Job
   domain: execution
   description: A unit of work submitted to a Resource. Self-referencing — jobs spawn child jobs.
   relationships:
-  - {type: belongs_to, entity: Resource, via: resource}
-  - {type: belongs_to, entity: WorkspaceMember, via: workspaceMember}
-  - {type: has_one, entity: Job, via: parentJob}
-  - {type: has_many, entity: Job, via: childJobs}
-  - {type: has_many, entity: JobFile, via: files}
-  - {type: has_many, entity: AppliedJobTag, via: tags}
-  - {type: has_many, entity: Template, via: templates}
-  enums: {status: 'JobStatus [CREATED, QUEUED, RUNNING, COMPLETED, FAILED, CANCELLING, CANCELLED, ERROR]'}
+  - type: belongs_to
+    entity: Resource
+    via: resource
+  - type: belongs_to
+    entity: WorkspaceMember
+    via: workspaceMember
+  - type: has_one
+    entity: Job
+    via: parentJob
+  - type: has_many
+    entity: Job
+    via: childJobs
+  - type: has_many
+    entity: JobFile
+    via: files
+  - type: has_many
+    entity: AppliedJobTag
+    via: tags
+  - type: has_many
+    entity: Template
+    via: templates
+  enums:
+    status: JobStatus [CREATED, QUEUED, RUNNING, COMPLETED, FAILED, CANCELLING, CANCELLED, ERROR]
   fields_of_note:
-  - 'externalIdentifier — remote id from a downstream compute provider'
-  - 'remoteStatus — downstream provider status string'
-  - 'isTerminalState — schema-provided "job is finished" flag'
+  - externalIdentifier — remote id from a downstream compute provider
+  - remoteStatus — downstream provider status string
+  - isTerminalState — schema-provided "job is finished" flag
   - 'data: JSON — untyped payload, shape declared by dataSchemaSlug'
 - name: JobFile
   domain: execution
   relationships:
-  - {type: has_one, entity: File, via: file}
+  - type: has_one
+    entity: File
+    via: file
 - name: File
   domain: storage
   description: A stored artifact; bytes are transferred out-of-band via a signed URL.
   relationships:
-  - {type: has_many, entity: Template, via: templates}
+  - type: has_many
+    entity: Template
+    via: templates
 - name: WorkspaceFile
   domain: storage
   relationships:
-  - {type: has_one, entity: File, via: file}
+  - type: has_one
+    entity: File
+    via: file
 - name: DataSchema
   domain: storage
   description: A JSON schema that Job.data / File payloads conform to, referenced by dataSchemaSlug.
 - name: Template
   domain: storage
   description: Render template for a file's data.
-  enums: {render_mode: DefaultRenderMode, type: TemplateType}
+  enums:
+    render_mode: DefaultRenderMode
+    type: TemplateType
 - name: Backend
   domain: compute
   description: A compute target published by a Product — a QPU, simulator or optimization solver.
   relationships:
-  - {type: belongs_to, entity: Product, via: product}
-  - {type: has_many, entity: BackendRegistration, via: backendRegistrations}
-  - {type: has_many, entity: AppliedBackendTag, via: tags}
-  enums: {status: 'BackendStatus [ONLINE, OFFLINE, MAINTENANCE, RETIRED, UNKNOWN]'}
+  - type: belongs_to
+    entity: Product
+    via: product
+  - type: has_many
+    entity: BackendRegistration
+    via: backendRegistrations
+  - type: has_many
+    entity: AppliedBackendTag
+    via: tags
+  enums:
+    status: BackendStatus [ONLINE, OFFLINE, MAINTENANCE, RETIRED, UNKNOWN]
 - name: BackendRegistration
   domain: compute
   relationships:
-  - {type: has_one, entity: BackendType, via: backendType}
+  - type: has_one
+    entity: BackendType
+    via: backendType
 - name: BillingAccount
   domain: billing
   relationships:
-  - {type: has_many, entity: BillingCredit, via: credits}
+  - type: has_many
+    entity: BillingCredit
+    via: credits
 - name: BillingTransaction
   domain: billing
   description: A line item created for each paid action; deducted from the billing account.
   relationships:
-  - {type: belongs_to, entity: Resource, via: resource}
-  - {type: belongs_to, entity: Job, via: job}
-  enums: {status: 'BillingTransactionStatus [PENDING, COMPLETE]', unit: 'BillingTransactionUnit [USD, EUR, MILLISECOND]'}
+  - type: belongs_to
+    entity: Resource
+    via: resource
+  - type: belongs_to
+    entity: Job
+    via: job
+  enums:
+    status: BillingTransactionStatus [PENDING, COMPLETE]
+    unit: BillingTransactionUnit [USD, EUR, MILLISECOND]
 - name: BillingCredit
   domain: billing
   relationships:
-  - {type: has_one, entity: Product, via: product}
-  - {type: has_one, entity: Resource, via: resource}
+  - type: has_one
+    entity: Product
+    via: product
+  - type: has_one
+    entity: Resource
+    via: resource
 - name: EventSubscription
   domain: events
   description: A webhook registration — an endpoint URL bound to one EventType within a workspace.
@@ -161,3 +264,192 @@ counts:
   entities_documented: 22
   objects_in_platform_schema: 78
   source_schema: graphql/strangeworks-platform.graphql
+relationships:
+- from: Workspace
+  to: WorkspaceMember
+  type: has_many
+  via: workspaceMembers
+- from: Workspace
+  to: WorkspaceInvite
+  type: has_many
+  via: workspaceInvites
+- from: Workspace
+  to: WorkspaceSetting
+  type: has_many
+  via: workspaceSettings
+- from: Workspace
+  to: WorkspaceFile
+  type: has_many
+  via: files
+- from: Workspace
+  to: Job
+  type: has_many
+  via: jobs
+- from: Workspace
+  to: Resource
+  type: has_many
+  via: resources
+- from: Workspace
+  to: Product
+  type: has_many
+  via: products
+- from: Workspace
+  to: Product
+  type: has_many
+  via: ownedProducts
+- from: Workspace
+  to: EventSubscription
+  type: has_many
+  via: eventSubscriptions
+- from: Workspace
+  to: BillingTransaction
+  type: has_many
+  via: billingTransactions
+- from: Workspace
+  to: BillingAccount
+  type: has_one
+  via: defaultBillingAccount
+- from: Workspace
+  to: Resource
+  type: has_one
+  via: defaultResource
+- from: Workspace
+  to: UserAccount
+  type: has_one
+  via: createdBy
+- from: UserAccount
+  to: UserProfile
+  type: has_one
+  via: userProfile
+- from: UserAccount
+  to: UserAccountFlag
+  type: has_many
+  via: userFlags
+- from: UserAccount
+  to: WorkspaceMember
+  type: has_many
+  via: workspaceMembers
+- from: WorkspaceMember
+  to: Workspace
+  type: belongs_to
+  via: workspace
+- from: WorkspaceInvite
+  to: UserAccount
+  type: has_one
+  via: sender
+- from: Product
+  to: Workspace
+  type: belongs_to
+  via: owner
+- from: Product
+  to: Backend
+  type: has_many
+  via: backends
+- from: Product
+  to: ProductImage
+  type: has_many
+  via: images
+- from: Product
+  to: ProductWebLink
+  type: has_many
+  via: webLinks
+- from: Product
+  to: CatalogTag
+  type: has_many
+  via: tags
+- from: CatalogItem
+  to: Product
+  type: has_one
+  via: product
+- from: CatalogItem
+  to: CatalogTag
+  type: has_many
+  via: tags
+- from: Resource
+  to: Product
+  type: belongs_to
+  via: product
+- from: Resource
+  to: BillingTransaction
+  type: has_many
+  via: billingTransactions
+- from: Resource
+  to: ResourceConfiguration
+  type: has_many
+  via: configuration
+- from: Job
+  to: Resource
+  type: belongs_to
+  via: resource
+- from: Job
+  to: WorkspaceMember
+  type: belongs_to
+  via: workspaceMember
+- from: Job
+  to: Job
+  type: has_one
+  via: parentJob
+- from: Job
+  to: Job
+  type: has_many
+  via: childJobs
+- from: Job
+  to: JobFile
+  type: has_many
+  via: files
+- from: Job
+  to: AppliedJobTag
+  type: has_many
+  via: tags
+- from: Job
+  to: Template
+  type: has_many
+  via: templates
+- from: JobFile
+  to: File
+  type: has_one
+  via: file
+- from: File
+  to: Template
+  type: has_many
+  via: templates
+- from: WorkspaceFile
+  to: File
+  type: has_one
+  via: file
+- from: Backend
+  to: Product
+  type: belongs_to
+  via: product
+- from: Backend
+  to: BackendRegistration
+  type: has_many
+  via: backendRegistrations
+- from: Backend
+  to: AppliedBackendTag
+  type: has_many
+  via: tags
+- from: BackendRegistration
+  to: BackendType
+  type: has_one
+  via: backendType
+- from: BillingAccount
+  to: BillingCredit
+  type: has_many
+  via: credits
+- from: BillingTransaction
+  to: Resource
+  type: belongs_to
+  via: resource
+- from: BillingTransaction
+  to: Job
+  type: belongs_to
+  via: job
+- from: BillingCredit
+  to: Product
+  type: has_one
+  via: product
+- from: BillingCredit
+  to: Resource
+  type: has_one
+  via: resource

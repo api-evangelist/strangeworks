@@ -1,0 +1,6 @@
+name: Strangeworks rate limits
+generated: '2026-10-20'
+method: none
+limit_count: 0
+limits: []
+note: Rate limits are not documented; the docs.strangeworks.com index (83 pages, read 2026-10-20) has no rate-limit page, and the GraphQL schemas declare no limit fields.

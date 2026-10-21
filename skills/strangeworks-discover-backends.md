@@ -1,5 +1,6 @@
 ---
-name: Discover which Strangeworks compute backends are available and online
+name: strangeworks-discover-backends
+title: Discover which Strangeworks compute backends are available and online
 description: >-
   Query the backend catalog to pick a QPU, simulator or optimization solver that is
   actually ONLINE, understand which product it belongs to, and activate a resource for it.

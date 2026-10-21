@@ -1,5 +1,6 @@
 ---
-name: Subscribe to Strangeworks job events instead of polling
+name: strangeworks-webhook-job-events
+title: Subscribe to Strangeworks job events instead of polling
 description: >-
   Register an HTTPS endpoint against a Strangeworks EventType so the platform pushes job
   state changes to you, and handle the fact that deliveries are unsigned and unretried.
