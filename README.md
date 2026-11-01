@@ -64,10 +64,120 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Strangeworks is an Austin, Texas based optimization and quantum computing company founded in 2018 by whurley (William Hurley). It operates a "heterogeneous hybrid compute" platform that gives enterprises and governments managed access to quantum processors, quantum-inspired annealers and classical optimization solvers from a single API and Python SDK.
+Strangeworks is an Austin, Texas based optimization and quantum computing company founded in 2018 by whurley (William Hurley). It operates a "heterogeneous hybrid compute" platform that gives enterprises and governments managed access to quantum processors, quantum-inspired annealers and classical optimization solvers from a single API and Python SDK, alongside its Compute, Workflows, Decisions and HybridSolver products and an expert services practice. The platform is organized around workspaces, products, resources, jobs and backends, and is programmable through three public GraphQL endpoints (sdk, platform, products) at api.strangeworks.com plus a REST proxy that forwards calls to an activated resource. Compute partners reachable through the platform include IBM Quantum, Amazon Braket, Azure Quantum, IonQ, Rigetti, Quantinuum, QuEra, IQM, AQT, Pasqal, D-Wave, Toshiba, Hitachi, Fujitsu, NEC, Gurobi, JIJ, LightSolver and Quantagonia (acquired 2025).
 
-The machine-readable contract here is **GraphQL, not OpenAPI** — three endpoints at `api.strangeworks.com` (`/sdk`, `/platform`, `/products`), captured under `graphql/` from the live schemas, plus an untyped REST proxy that forwards calls to an activated resource.
+**Areas:** Company · Quantum Computing · Optimization · High Performance Computing · Artificial Intelligence · Developer Platform · GraphQL · Compute · Scientific Computing · Operations Research
 
-- Website: https://strangeworks.com/
-- Documentation: https://docs.strangeworks.com/
-- Developer portal: https://portal.strangeworks.com/
+## Strangeworks on APIs.io
+
+Everything profiled for Strangeworks is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/strangeworks/](https://apis.io/providers/strangeworks/)** — or go straight to one of the APIs or properties below.
+
+### APIs (3)
+
+- [Strangeworks SDK GraphQL API](https://apis.io/apis/strangeworks/sdk/) — The GraphQL API the Strangeworks Python SDK is built on. Exposes the workspace a user's API key belongs to, the compute backends available to it, and…
+- [Strangeworks Platform GraphQL API](https://apis.io/apis/strangeworks/platform/) — The full Strangeworks platform GraphQL API covering user accounts, workspaces and members, invitations, billing accounts, credits and transactions, products…
+- [Strangeworks Products GraphQL API](https://apis.io/apis/strangeworks/products/) — The product-side GraphQL API used by compute products published on the Strangeworks platform to register and update backends, create and update jobs, upload…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Strangeworks Webhooks](https://apis.io/asyncapis/strangeworks/strangeworks-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [strangeworks](https://apis.io/servers/strangeworks/strangeworks/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Strangeworks Authentication](https://apis.io/security/strangeworks/strangeworks-authentication/)
+- [Strangeworks Domain Security](https://apis.io/security/strangeworks/strangeworks-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Strangeworks Plans Pricing](https://apis.io/plans/strangeworks/strangeworks-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Strangeworks Rate Limits](https://apis.io/rate-limits/strangeworks/strangeworks-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://strangeworks.com/)
+- [Documentation](https://docs.strangeworks.com/)
+- [Getting started](https://docs.strangeworks.com/welcome/get-started)
+- [Sign up](https://portal.strangeworks.com/)
+- [Support](https://strangeworks.com/contact)
+- [Blog](https://strangeworks.com/press)
+- [Terms of service](https://strangeworks.com/terms)
+- [Privacy policy](https://strangeworks.com/privacy)
+- [GitHub](https://github.com/strangeworks)
+
+## API Evangelist rating
+
+**Kin Score 43.3** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 46.9 |
+| Contract governance | 4.5 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 58.9 |
+| Access clarity | 34.2 |
+
+**Agent readiness 22.5** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | yes |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 22.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/strangeworks/](https://apis.io/providers/strangeworks/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Strangeworks: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/strangeworks/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
